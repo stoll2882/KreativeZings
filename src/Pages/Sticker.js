@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Card, Button } from 'react-bootstrap';
 import UserContext from '../store/context';
 
@@ -46,3 +46,4 @@ export default class Sticker extends React.Component {
 }
 
 Sticker.contextType = UserContext;
+
