@@ -23,7 +23,7 @@ const Login = () => {
         return (
             <div className="custom-text" id="login">
                 <h1 id="login-title">{context.userName}</h1>
-                {/* <FormGroup id="login-form">
+                <FormGroup id="login-form">
                     <h4>Enter username and password below to login!</h4>
                     <br></br>
                     <FormGroup>
@@ -35,7 +35,7 @@ const Login = () => {
                         <Input type="password" />
                     </FormGroup>
                     <Button onClick={() => context.logOn(title)}>Login</Button>
-                </FormGroup> */}
+                </FormGroup>
             </div>
         );
     }

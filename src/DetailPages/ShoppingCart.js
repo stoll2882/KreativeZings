@@ -27,10 +27,10 @@ function ShoppingCart () {
     function getIndex(id) {
       return context.cart.findIndex(obj => obj.id === id);
     }
-    // const history = useHistory();
+    const history = useHistory();
 
     function checkoutClicked() {
-      // history.push("/Checkout");
+      history.push("/Checkout");
     }
 
     return (

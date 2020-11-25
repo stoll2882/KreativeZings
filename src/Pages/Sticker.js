@@ -11,25 +11,25 @@ export default class Sticker extends React.Component {
     }
 
     addToCart() {
-        // if (this.handleGetIndex(this.props.id) == -1) {
-        //     this.context.cart.push({id: this.props.id, name: this.props.name, description: this.props.description, image: this.props.image, quantity: this.props.quantity});
-        // } else {
-        //     var index = this.handleGetIndex(this.props.id);
-        //     var copyCart = this.context.cart;
-        //     copyCart[index].quantity = copyCart[index].quantity + 1;
-        //     this.context.setCart(copyCart);
-        // }
-        // this.context.setCart(this.context.cart);
-        // this.context.setCartTotal(this.context.cartTotal + 3);
+        if (this.handleGetIndex(this.props.id) == -1) {
+            this.context.cart.push({id: this.props.id, name: this.props.name, description: this.props.description, image: this.props.image, quantity: this.props.quantity});
+        } else {
+            var index = this.handleGetIndex(this.props.id);
+            var copyCart = this.context.cart;
+            copyCart[index].quantity = copyCart[index].quantity + 1;
+            this.context.setCart(copyCart);
+        }
+        this.context.setCart(this.context.cart);
+        this.context.setCartTotal(this.context.cartTotal + 3);
     }
 
-    // getIndex(id) {
-    //     return this.context.cart.findIndex(obj => obj.id === id);
-    // }
+    getIndex(id) {
+        return this.context.cart.findIndex(obj => obj.id === id);
+    }
     
-    // viewDetails(id) {
-    //     var currentCard = document.getElementById("sticker-card");
-    // }
+    viewDetails(id) {
+        var currentCard = document.getElementById("sticker-card");
+    }
     render() {
         const id = this.props.id;
         return (

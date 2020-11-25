@@ -26,7 +26,7 @@ const CreateAccount = () => {
         return (
             <div className="custom-text" id="login">
                 <h1 id="login-title">{context.userName}</h1>
-                {/* <Form id="login-form">
+                <Form id="login-form">
                     <h4>Enter information below to join the family!</h4>
                     <br></br>
                     <Row form>
@@ -68,7 +68,7 @@ const CreateAccount = () => {
                         </Col>
                     </Row>
                     <Button onClick={() => context.logOn(title)}>Create Account</Button>
-                </Form> */}
+                </Form>
             </div>
         );
     }

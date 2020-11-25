@@ -31,7 +31,6 @@ export default class Stickers extends React.Component {
     }
 
     render() {
-
         const stickerArray = [
             { id: 1, name: "Paper Thin Sticker", description: "Black and white Paper Thin sticker popular and ready for purchase!", image: Sticker1, quantity: 1},
             { id: 2, name: "Believe You Can Sticker", description: "Sticker to remind us all to Believe We Can accomplish whatever we put our minds to.", image: Sticker2, quantity: 1 },
@@ -55,7 +54,7 @@ export default class Stickers extends React.Component {
 
         this.stickerCards = stickerArray.map( (sticker) => {
             return (
-                <Sticker id={sticker.id} name={sticker.name} description={sticker.description} image={sticker.image} quantity={sticker.quantity} addToCart={this.handleAddToCart} />
+                <Sticker id={sticker.id} name={sticker.name} description={sticker.description} image={sticker.image} quantity={sticker} addToCart={this.handleAddToCart} />
             );
         });
 

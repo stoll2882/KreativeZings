@@ -32,7 +32,7 @@ function ShoppingCart () {
         <div className="custom-text" id="checkout-div">
             <h1><img id="prices-title" src={CheckoutTitle} alt="Prices"></img></h1>
 
-            {/* <Table striped bordered hover variant="none" id="prices-table">
+            <Table striped bordered hover variant="none" id="prices-table">
                 <thead>
                     <tr style={{fontSize: "larger"}}>
                         <th>Number of Items</th>
@@ -119,7 +119,7 @@ function ShoppingCart () {
                     </Col>   
                 </Row>
                 <Button onClick={submitClicked}>Submit Order</Button>
-            </Form> */}
+            </Form>
         </div>
     );
 }
