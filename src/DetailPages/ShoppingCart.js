@@ -15,6 +15,8 @@ function ShoppingCart () {
     // var totalPrice = cartLength * 3;
     // var found = false;
 
+    // shopping cart function that holds the current users shopping cart
+
     function remove(id) {
         var indexOfItemToRemove = getIndex(id);
         var toRemove = context.cart[indexOfItemToRemove].quantity * 3;
