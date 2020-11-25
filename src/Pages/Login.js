@@ -5,9 +5,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import UserContext from '../store/context';
 
 const Login = () => {
-    // const [value, setValue] = useState("Profile");
-    // const {state, actions} = useContext(Context);
     var title = "Login: ";
+
+    // user can login successfully and get a confirmation message
 
     const context = useContext(UserContext);
 

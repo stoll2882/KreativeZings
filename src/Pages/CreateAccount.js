@@ -11,9 +11,9 @@ const CreateAccount = () => {
 
     const context = useContext(UserContext);
 
-    function createAccountClicked(title) {
-        context.logOn(title);
-    }
+    // function createAccountClicked(title) {
+    //     context.logOn(title);
+    // }
 
     if (context.loggedIn) {
         return (
