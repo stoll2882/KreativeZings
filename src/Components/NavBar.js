@@ -62,7 +62,6 @@ const NavBar = () => {
                                 </LinkContainer>
                             </NavDropdown>
                         }
-                        {/* <Nav.Link href="#home">Profile</Nav.Link> */}
                     </Nav>
                     {/* <Form inline>
                         <FormControl type="text" placeholder="Search" className="mr-sm-2" />
