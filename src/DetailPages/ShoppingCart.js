@@ -12,10 +12,8 @@ import Checkout from '../Pages/Checkout';
 function ShoppingCart () {
     const context = useContext(UserContext);
     var cartLength = context.cart.length;
-    // var totalPrice = cartLength * 3;
-    // var found = false;
 
-    // shopping cart function that holds the current users shopping cart
+    // shopping cart function that holds the current users shopping cart 
 
     function remove(id) {
         var indexOfItemToRemove = getIndex(id);
