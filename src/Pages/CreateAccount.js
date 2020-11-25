@@ -5,9 +5,9 @@ import "bootstrap/dist/css/bootstrap.css";
 import UserContext from '../store/context';
 
 const CreateAccount = () => {
-    // const [value, setValue] = useState("Profile");
-    // const {state, actions} = useContext(Context);
     var title = "Login: ";
+
+    // user can create an account successfully
 
     const context = useContext(UserContext);
 
