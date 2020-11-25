@@ -1,0 +1,252 @@
+body {
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    background: url(./Images/MainBackground.jpg);
+}
+
+#main-title {
+    width: 70vw;
+    margin-top: 20vh;
+}
+
+#main-page-description {
+    font-family: "CustomFont";
+    font-size: 2vw;
+}
+
+#aboutme-title {
+    width: 20vw;
+    margin-top: 5vh;
+    float: left;
+    margin-left: 25vw;
+    border: 5px solid black;
+}
+
+#aboutme-page-description {
+    font-family: "CustomFont";
+    font-size: 2vw;
+    float: right;
+    margin-right: 15vw;
+    margin-top: 25vh;
+    font-size: 10vh;
+}
+
+.Row {
+    margin-bottom: 10vh;;
+}
+
+#about-me-text {
+    font-family: "CustomFont";
+    width: 75vw;
+    margin-left: 13vw;
+    font-size: 3.5vh;
+}
+
+/*Formats the header that contains the navBar*/
+header {
+    background-color: white;
+    position: relative;
+    height: 80px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    align-items: center;
+    font-weight: bolder;
+    font-size: larger;
+    z-index: 2;
+    /* text-shadow: 1px 1px 20px rgb(214, 145, 88); */
+    border-radius: 30px;
+    font-family: "CustomFont";
+    font-size: 1.5vw;
+}
+
+header ul {
+    margin-top: 10vh !important;
+}
+
+@font-face {
+    font-family: "CustomFont";
+    src: url(Images/BubblegumSans-Regular.ttf);
+}
+
+.custom-text {
+    font-family: "CustomFont";
+}
+
+.nav-bar {
+    font-family: "CustomFont";
+    font-size: 1.5rem;
+}
+
+.custom-text h1 {
+    font-size: 7vh;
+    text-align: center;
+}
+
+/*Format header helper*/
+header * {
+    display: inline;
+    align-items: center;
+    align-content: center;
+}
+
+/*Formats image in the header*/
+.nav-image {
+    height: 10%;
+    margin-top: -100px;
+    float: right;
+    padding: 20px;
+}
+
+.nav-images-li {
+    /* align-items: baseline; */
+    margin-left: 10px;
+}
+
+/*Formats list item in the header (I used a list to make spacing easier when setting the top links)*/
+header li {
+    display: inline;
+    margin: 50px;
+}
+
+/*Formats a link in the list in the header by making them look more asthetically pleasing*/
+header li a {
+    color: black;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+/*makes display inline*/
+.inline {
+    display: inline;
+}
+
+#custom-order-form {
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-bottom: 10vh;
+    box-shadow: 1px 1px 20px black;
+    padding: 20px;
+    text-align: left;
+}
+
+#custom-orders-title {
+    width: 50vw;
+}
+
+#contact-me-title {
+    margin-top: 5vh;
+}
+
+#contact-me-form {
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-bottom: 10vh;
+    margin-top: 15vh;
+    box-shadow: 1px 1px 20px black;
+    padding: 20px;
+    text-align: left;
+}
+
+#prices-table {
+    width: 90vw;
+    margin-left: 5vw;;
+    margin-right: 30vw;
+    margin-top: 10vh;
+    box-shadow: 1px 1px 20px black;
+}
+
+/* #prices-container {
+    width: 90vw;
+    margin-left: 5vw;;
+    margin-right: 5vw;
+} */
+
+#login-form {
+    width: 50vw;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    margin-bottom: 10vh;
+    margin-top: 5vh;
+    box-shadow: 1px 1px 20px black;
+    padding: 20px;
+    text-align: left;
+}
+
+#login-title {
+    margin-top: 5vh;
+}
+
+.hide {
+    display: none;
+}
+
+.sticker-card {
+    margin: 10px;
+}
+
+#stickers-title {
+    height: 20vh;
+}
+
+#stickers-container {
+    margin: 5vw;
+    margin-top: -2vh;
+}
+
+#checkout-title {
+    width: 40vw;
+    margin-bottom: -10vh;
+}
+
+#login-title {
+    width: 40vw;
+    /* margin-bottom: vh; */
+}
+
+#prices-title {
+    width: 30vw;
+    margin-bottom: -7vh;
+    margin-top: 2vh;
+}
+
+#checkout-title {
+    width: 40vw;
+    margin-bottom: -10vh;
+}
+
+#contact-me-title {
+    width: 40vw;
+    margin-bottom: -10vh;
+}
+
+#checkout-form {
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-bottom: 10vh;
+    margin-top: 5vh;
+    box-shadow: 1px 1px 20px black;
+    padding: 20px;
+    text-align: left;
+}
+
+#credit-card-field {
+    width: 100vw;
+}
+
+#credit-card-field-label {
+    padding-right: 20px;
+}
+
+.welcome-div {
+    margin-top: 10vh;
+    font-family: "CustomFont";
+}
