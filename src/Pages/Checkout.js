@@ -8,9 +8,10 @@ import CreditCardInput from 'react-credit-card-input';
 import "bootstrap/dist/css/bootstrap.css";
 import UserContext from '../store/context';
 import LinkContainer from 'react-router-bootstrap';
-// import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import Checkout from '../Pages/Checkout';
+
+// user can simulate checkout process! 
 
 function ShoppingCart () {
     const context = useContext(UserContext);
