@@ -73,6 +73,7 @@ function Routes () {
         });
     }
 
+    // function to update the cart once an item has been added
     function updateCart(userName, cart) {
         console.log("writing cart...");
         axios.post('http://localhost:3002/cart/' + userName, cart).then((response) => {
@@ -84,6 +85,7 @@ function Routes () {
         });
     }
 
+    // if username does not exist already... i.e user is not logged in... cookies the username and login user
     if (userName == "" || userName == undefined) {
         let currentUserName = cookies["userName"];
         if (currentUserName != "" && currentUserName != undefined) {
