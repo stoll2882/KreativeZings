@@ -9,7 +9,7 @@ export default class Sticker extends React.Component {
         this.handleDetailsPage = this.viewDetails.bind(this);
         this.handleGetIndex = this.getIndex.bind(this);
     }
-
+    
     addToCart() {
         if (this.handleGetIndex(this.props.id) == -1) {
             this.context.cart.push({id: this.props.id, name: this.props.name, description: this.props.description, image: this.props.image, quantity: this.props.quantity});
@@ -21,8 +21,9 @@ export default class Sticker extends React.Component {
         }
         this.context.setCart(this.context.cart);
         this.context.setCartTotal(this.context.cartTotal + 3);
+        this.context.updateCart(this.context.userName, this.context.cart);
     }
-
+    
     getIndex(id) {
         return this.context.cart.findIndex(obj => obj.id === id);
     }

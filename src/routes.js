@@ -13,30 +13,99 @@ import Checkout from './Pages/Checkout';
 import Login from './Pages/Login';
 import CreateAccount from './Pages/CreateAccount';
 import UserContext from './store/context';
+import axios from "axios";
+import { useCookies } from 'react-cookie';
 
 function Routes () {
     const [loggedIn, setLoggedIn] = useState(false);
+    const [authorized, setAuthorized] = useState(0);
     const [userName, setUserName] = useState("");
-    const [cart, setCart] = useState([]);
+    const [cart, setCart] = useState();
+    const [loadingCart, setLoadingCart] = useState(false);
     const [cartTotal, setCartTotal] = useState(0);
+    const [cookies, setCookie] = useCookies(["userName"]);
 
-    function logOn(userName) {
-        setUserName(userName);
-        setLoggedIn(true);
+    function logOn(userName, password) {
+        setAuthorized(0);
+        console.log("trying to logon" + userName);
+        axios.get('http://localhost:3002/user/' + userName + '/' + password).then((response) => {
+            console.log(response.status);
+            if (response.status == 200) {
+                setAuthorized(2);
+                setUserName(userName);
+                setLoggedIn(true);
+                console.log("login worked");
+                console.log(response.data);
+                setCookie("userName", userName);
+            } else {
+                setAuthorized(1);
+                console.log("failed to login");
+            }
+        }).catch((error) => {
+            setAuthorized(1);
+            console.log(error);
+        });
     }
 
     function logOut() {
+        setCookie("userName", "");
         setUserName("");
         setLoggedIn(false);
     }
 
-    function createAccount(userName) {
-        setUserName(userName);
-        setLoggedIn(true);
+    function createAccount(firstName, lastName, userName, password, email, phoneNumber) {
+        var user = { 
+            firstName: firstName,
+            lastName: lastName,
+            userName: userName,
+            password: password,
+            email: email,
+            phoneNumber: phoneNumber
+        }
+        axios.post('http://localhost:3002/user/', user).then((response) => {
+            if (response.status == 201) {
+                setAuthorized(2);
+                setUserName(userName);
+                setLoggedIn(true);
+                console.log("login worked");
+                console.log(response.data);
+            }
+        });
+    }
+
+    function updateCart(userName, cart) {
+        console.log("writing cart...");
+        axios.post('http://localhost:3002/cart/' + userName, cart).then((response) => {
+            if (response.status == 200) {
+                console.log("cart written to back end");
+            } else {
+                console.log("cart failed to write to back end")
+            }
+        });
+    }
+
+    if (userName == "" || userName == undefined) {
+        let currentUserName = cookies["userName"];
+        if (currentUserName != "" && currentUserName != undefined) {
+            setUserName(currentUserName);
+            setLoggedIn(true);
+        }
+    }
+
+    // say a different message if cartloading is true
+    if (loggedIn == true && cart == undefined && loadingCart == false) {
+        setLoadingCart(true);
+        axios.get('http://localhost:3002/cart/' + userName).then((response) => {
+            setCart(response.data);
+            setLoadingCart(false);
+        }).catch((error) => {
+            console.log(error);
+        })
     }
 
     const value = { 
         loggedIn: loggedIn,
+        authorized: authorized,
         userName: userName,
         setLoggedIn: setLoggedIn,
         setUserName: setUserName,
@@ -44,6 +113,8 @@ function Routes () {
         logOut: logOut,
         createAccount: createAccount,
         cart: cart,
+        loadingCart: loadingCart,
+        updateCart: updateCart,
         setCart: setCart,
         cartTotal: cartTotal,
         setCartTotal: setCartTotal

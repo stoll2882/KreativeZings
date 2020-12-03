@@ -6,16 +6,17 @@ import UserContext from '../store/context';
 
 const Login = () => {
     var title = "Login: ";
+    var password = "";
 
     // user can login successfully and get a confirmation message
 
     const context = useContext(UserContext);
 
     function loginClicked(title) {
-        context.logOn(title);
+        context.logOn(title, password);
     }
 
-    if (context.loggedIn) {
+    if (context.loggedIn && context.authorized == 2) {
         return (
             <h1 className="welcome-div">Welcome, {context.userName}!</h1>
         );
@@ -32,9 +33,14 @@ const Login = () => {
                     </FormGroup>
                     <FormGroup>
                         <Label for="examplePassword"><h4>Password</h4></Label>
-                        <Input type="password" />
+                        <Input onChange={(e) => (password = e.target.value)} type="password" />
                     </FormGroup>
-                    <Button onClick={() => context.logOn(title)}>Login</Button>
+                    {
+                        context.authorized == 1 ?
+                        <h5 style={{color: "red"}}>Username or Password Incorrect</h5>:
+                        <br></br>
+                    }
+                    <Button onClick={() => context.logOn(title, password)}>Login</Button>
                 </FormGroup>
             </div>
         );

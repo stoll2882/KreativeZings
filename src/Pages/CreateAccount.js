@@ -5,15 +5,16 @@ import "bootstrap/dist/css/bootstrap.css";
 import UserContext from '../store/context';
 
 const CreateAccount = () => {
-    var title = "Login: ";
+    var title;
+    var firstName;
+    var lastName;
+    var password;
+    var email;
+    var phoneNumber;
 
     // user can create an account successfully
 
     const context = useContext(UserContext);
-
-    // function createAccountClicked(title) {
-    //     context.logOn(title);
-    // }
 
     if (context.loggedIn) {
         return (
@@ -33,21 +34,13 @@ const CreateAccount = () => {
                         <Col md={6}>
                             <FormGroup>
                                 <Label for="exampleFirstName"><h4>First Name</h4></Label>
-                                <Input type="name" name="name" id="exampleFirstName" placeholder="John" />
+                                <Input onChange={(e) => (firstName = e.target.value)} type="name" name="name" id="exampleFirstName" placeholder="John" />
                             </FormGroup>
                         </Col>
                         <Col md={6}>
                             <FormGroup>
                                 <Label for="exampleLastName"><h4>Last Name</h4></Label>
-                                <Input type="name" name="name" id="exampleLastName" placeholder="Doe" />
-                            </FormGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <FormGroup>
-                                <Label for="exampleEmail>"><h4>Email</h4></Label>
-                            <   Input type="text" name="email" id="exampleEmail" placeholder="john@doe.com"></Input>
+                                <Input onChange={(e) => (lastName = e.target.value)} type="name" name="name" id="exampleLastName" placeholder="Doe" />
                             </FormGroup>
                         </Col>
                     </Row>
@@ -55,7 +48,7 @@ const CreateAccount = () => {
                         <Col>
                             <FormGroup>
                                 <Label for="exampleName"><h4>Username</h4></Label>
-                                <Input onChange={(e) => (title = e.target.value)} type="text" />
+                                <Input onChange={(e) => (title = e.target.value)} onChange={(e) => (title = e.target.value)} type="text" />
                             </FormGroup>
                         </Col>
                     </Row>
@@ -63,11 +56,27 @@ const CreateAccount = () => {
                         <Col>
                             <FormGroup>
                                 <Label for="examplePassword"><h4>Password</h4></Label>
-                                <Input type="password" />
+                                <Input onChange={(e) => (password = e.target.value)} type="password" />
                             </FormGroup>
                         </Col>
                     </Row>
-                    <Button onClick={() => context.logOn(title)}>Create Account</Button>
+                    <Row>
+                        <Col>
+                            <FormGroup>
+                                <Label for="exampleEmail>"><h4>Email</h4></Label>
+                                <Input onChange={(e) => (email = e.target.value)} type="text" name="email" id="exampleEmail" placeholder="john@doe.com"></Input>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FormGroup>
+                                <Label for="examplePhoneNumber>"><h4>Phone Number</h4></Label>
+                                <Input onChange={(e) => (phoneNumber = e.target.value)} type="phoneNumber" name="phoneNumber" id="examplePhoneNumber" placeholder="(888) 888-8888"></Input>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Button onClick={() => context.createAccount(firstName, lastName, title, password, email, phoneNumber)}>Create Account</Button>
                 </Form>
             </div>
         );

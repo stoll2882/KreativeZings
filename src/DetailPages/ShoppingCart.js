@@ -11,7 +11,12 @@ import Checkout from '../Pages/Checkout';
 
 function ShoppingCart () {
     const context = useContext(UserContext);
-    var cartLength = context.cart.length;
+    var cartLength;
+    if (context.cart != null) {
+      cartLength = context.cart.length;
+    } else {
+      cartLength = 0;
+    }
 
     // shopping cart function that holds the current users shopping cart 
 
@@ -22,6 +27,7 @@ function ShoppingCart () {
         var newCartTotal = (context.cartTotal - toRemove);
         context.setCartTotal(newCartTotal);
         context.setCart(context.cart);
+        context.updateCart(context.userName, context.cart);
     }
 
     function getIndex(id) {

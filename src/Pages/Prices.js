@@ -19,9 +19,9 @@ function Prices () {
                     <tr>
                         <td>1</td>
                         <td>Pre-Designed Sticker</td>
-                        <td>Small: $3.00</td>
+                        <td>$3.00</td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td>2</td>
                         <td></td>
                         <td>Medium: $6.00</td>
@@ -30,13 +30,13 @@ function Prices () {
                         <td>3</td>
                         <td></td>
                         <td>Large: $10.00</td>
-                    </tr>
+                    </tr> */}
                     <tr>
-                        <td>4</td>
+                        <td>2</td>
                         <td>Custom Image Sticker</td>
-                        <td>Small: $6.00</td>
+                        <td>$6.00</td>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <td>5</td>
                         <td></td>
                         <td>Medium: $8.00</td>
@@ -45,7 +45,7 @@ function Prices () {
                         <td>6</td>
                         <td></td>
                         <td>Large: $13.00</td>
-                    </tr>
+                    </tr> */}
                 </thead>
             </Table>
         </div>
