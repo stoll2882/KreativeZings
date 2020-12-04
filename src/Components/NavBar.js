@@ -40,10 +40,9 @@ const NavBar = () => {
                         <LinkContainer to="ShoppingCart" className="ml-auto">
                             <Nav.Link>Cart</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to="Checkout">
+                        {/* <LinkContainer to="Checkout">
                             <Nav.Link>Checkout</Nav.Link>
-                        </LinkContainer>
-                        {/* <Nav.Link href="./Login">Profile</Nav.Link> */}
+                        </LinkContainer> */}
                         {
                             context.loggedIn ?
                             <NavDropdown title={title} id="basic-nav-dropdown">

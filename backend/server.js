@@ -38,26 +38,6 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
-// var databse = null;
-
-// mongoClient.connect("mongodb://localhost:27017/mydb", function(err, db) {
-//     if (err) {
-//         throw err;
-//     }
-//     console.log("database created");
-//     databse = db.db("mydb");
-// });
-
-// app.post("/user:/firstName:/lastName:/userName:/password:/email:/phoneNumber", function (req, res) {
-//     var storageUser = new userStorage();
-//     var user = new User(req.params["userName"], req.params["firstName"], req.params["lastName"], req.params["password"], req.params["email"], req.params["phoneNumber"]);
-//     storageUser.initialize( () => {
-//         storageUser.createUser(user, () => {
-//             res.status(201).end();
-//         });
-//     });
-// });
-
 app.post("/user", function (req, res) {
     var storageUser = new userStorage();
     var user = req.body;

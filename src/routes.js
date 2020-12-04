@@ -4,7 +4,8 @@ import AboutMe from './Pages/AboutMe';
 import Stickers from './Pages/Stickers';
 import CustomOrder from './Pages/CustomOrder';
 import ContactMe from './Pages/ContactMe';
-import ShoppingCart from './DetailPages/ShoppingCart'
+import ShoppingCart from './DetailPages/ShoppingCart';
+import CustomOrderCheckout from './Pages/CustomOrderCheckout';
 import './styles.css';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './Components/NavBar';
@@ -16,16 +17,22 @@ import UserContext from './store/context';
 import axios from "axios";
 import { useCookies } from 'react-cookie';
 import context from 'react-bootstrap/esm/AccordionContext';
+import Profile from './DetailPages/profile';
 
 function Routes () {
     const [loggedIn, setLoggedIn] = useState(false);
     const [authorized, setAuthorized] = useState(0);
     const [userName, setUserName] = useState("");
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [cart, setCart] = useState();
     const [loadingCart, setLoadingCart] = useState(false);
     const [cartTotal, setCartTotal] = useState(0);
-    const [cookies, setCookie] = useCookies(["userName"]);
+    const [cookies, setCookie] = useCookies(["userName", "email", "name"]);
     const [pictures, setPictures] = useState([]);
+    const [contactFormSubmitted, setContactFormSubmitted] = useState(false);
+    const [customOrderTotal, setCustomOrderTotal] = useState(0);
+    const [customOrderQuantity, setCustomOrderQuantity] = useState(0);
 
     function logOn(userName, password) {
         setAuthorized(0);
@@ -35,10 +42,14 @@ function Routes () {
             if (response.status == 200) {
                 setAuthorized(2);
                 setUserName(userName);
+                setEmail(response.data.email);
+                setName(response.data.firstName + " " + response.data.lastName);
                 setLoggedIn(true);
                 console.log("login worked");
                 console.log(response.data);
                 setCookie("userName", userName);
+                setCookie("email", email);
+                setCookie("name", name);
             } else {
                 setAuthorized(1);
                 console.log("failed to login");
@@ -52,6 +63,8 @@ function Routes () {
     function logOut() {
         setCookie("userName", "");
         setUserName("");
+        setName("");
+        setEmail("");
         setLoggedIn(false);
     }
 
@@ -68,6 +81,9 @@ function Routes () {
             if (response.status == 201) {
                 setAuthorized(2);
                 setUserName(userName);
+                setCookie("userName", userName);
+                setEmail(email);
+                setName(firstName + " " + lastName);
                 setLoggedIn(true);
                 console.log("login worked");
                 console.log(response.data);
@@ -119,18 +135,7 @@ function Routes () {
 
     function customOrderRequest(name, email, specificInstruction, quantity, image) {
         var data = new FormData();
-        // data.append('name', name);
-        // data.append('email', email);
-        // data.append('specificInstruction', specificInstruction);
-        // data.append('quantity', quantity);
         data.append("image", image);
-        // var request = {
-        //     name: name,
-        //     email: email,
-        //     specificInstruction: specificInstruction,
-        //     quantity: quantity,
-        //     image: image
-        // }
         axios.post('http://localhost:3002/customOrderRequest/' + name + "/" + email + "/" + specificInstruction + "/" + quantity, data).then((response) => {
             if (response.status == 201) {
                 if (response.status == 200) {
@@ -145,11 +150,34 @@ function Routes () {
     // if username does not exist already... i.e user is not logged in... cookies the username and login user
     if (userName == "" || userName == undefined) {
         let currentUserName = cookies["userName"];
+        let currentUserEmail = cookies["email"];
+        let currentName = cookies["name"];
         if (currentUserName != "" && currentUserName != undefined) {
             setUserName(currentUserName);
             setLoggedIn(true);
             updateTotalPrice(cart);
+            if (currentUserEmail != "" && currentUserEmail != undefined) {
+                setEmail(currentUserEmail);
+            } else {
+                setEmail("no email known");
+            }
+            if (currentName != "" && currentName != undefined) {
+                setName(currentName);
+            } else {
+                setName("no name known");
+            }
         }
+        // axios.get('http://localhost:3002/user/' + userName).then((response) => {
+        //     console.log(response.status);
+        //     if (response.status == 200) {
+        //         setEmail(response.data.email);
+        //         setName(response.data.firstName + " " + response.data.lastName);
+        //         console.log("login worked");
+        //         setCookie("userName", userName);
+        //     } else {
+        //         console.log("failed to login");
+        //     }
+        // });
     }
 
     // say a different message if cartloading is true
@@ -164,23 +192,16 @@ function Routes () {
         })
     }
 
-    // if (loggedIn == true && cart != undefined && loadingCart == false) {
-    //     var total = 0;
-    //     if (cart != undefined) {
-    //         for (var i = 0; i < cart.length; i++) {
-    //             var quantity = cart[i].quantity;
-    //             total = total + (quantity * 3);
-    //         }
-    //     }
-    //     setCartTotal(total);
-    // }
-
     const value = { 
         loggedIn: loggedIn,
         authorized: authorized,
         userName: userName,
         setLoggedIn: setLoggedIn,
         setUserName: setUserName,
+        email: email,
+        setEmail: setEmail,
+        name: name,
+        setName: setName,
         logOn: logOn,
         logOut: logOut,
         createAccount: createAccount,
@@ -194,7 +215,13 @@ function Routes () {
         contactMeRequest: contactMeRequest,
         customOrderRequest: customOrderRequest,
         pictures: pictures,
-        setPictures: setPictures
+        setPictures: setPictures,
+        contactFormSubmitted: contactFormSubmitted,
+        setContactFormSubmitted: setContactFormSubmitted,
+        customOrderTotal: customOrderTotal,
+        setCustomOrderTotal: setCustomOrderTotal,
+        customOrderQuantity: customOrderQuantity,
+        setCustomOrderQuantity: setCustomOrderQuantity
     };
 
     return (
@@ -217,6 +244,9 @@ function Routes () {
             <Route exact path="/CustomOrder">
                 <CustomOrder />
             </Route>
+            <Route exact path="/CustomOrderCheckout">
+                <CustomOrderCheckout />
+            </Route>
             <Route exact path="/Prices">
                 <Prices />
             </Route>
@@ -226,9 +256,12 @@ function Routes () {
             <Route exact path="/ShoppingCart">
                 <ShoppingCart />
             </Route> 
+            <Route exact path="/Profile">
+                <Profile />
+            </Route>
             <Route exact path="/Checkout">
                 <Checkout />
-                </Route>
+            </Route>
             <Route exact path="/Login">
                 <Login />
             </Route>
