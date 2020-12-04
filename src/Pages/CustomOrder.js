@@ -1,13 +1,26 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import { Button, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import CustomOrderTitle from '../Images/CustomOrdersTitle.png';
+import ImageUploader from 'react-images-upload';
+import UserContext from '../store/context';
 
 const CustomOrder = () => {
+
+    const context = useContext(UserContext);
+
     var name;
     var email;
     var specificInstructions;
     var quantity;
     var image;
+
+    function onDrop(picture) {
+        context.setPictures(context.pictures.concat(picture));
+    }
+
+    function submitted() {
+
+    }
 
         return (
         <div>
@@ -29,20 +42,29 @@ const CustomOrder = () => {
                     <Label for="quantity"><h4>Quantity</h4></Label>
                     <Input onChange={(e) => (quantity = e.target.value)} type="number" name="text" id="quantity" />
                 </FormGroup>
-                <FormGroup>
+                <ImageUploader
+                    withIcon={true}
+                    buttonText='Choose images'
+                    onChange={onDrop}
+                    imgExtension={['.jpg', '.gif', '.png', '.gif']}
+                    maxFileSize={5242880}
+                    singleImage={true}
+                    withPreview={true}
+                />
+                {/* <FormGroup>
                     <Label for="exampleFile"><h4>Image</h4></Label>
                     <Input type="file" name="file" id="exampleFile" />
                     <FormText color="muted">
                     Choose an image from your own computer to upload. This will be the image on your custom sticker!
                     </FormText>
-                </FormGroup>
+                </FormGroup> */}
                 {/* <FormGroup check>
                     <Label check>
                     <Input type="checkbox" />{' '}
                     Check me out
                     </Label>
                 </FormGroup> */}
-                <Button>Check Out</Button>
+                <Button  onClick={() => context.customOrderRequest(name, email, specificInstructions, quantity, context.pictures[0])}>Check Out</Button>
             </FormGroup>
         </div>
     );

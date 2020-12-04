@@ -9,6 +9,7 @@ const User = require("./user.js");
 const api = require("./image.routes");
 var nodemailer = require('nodemailer');
 const creds = require('./config');
+const multer = require('multer');
 
 const app = express();
 
@@ -113,6 +114,8 @@ app.get("/cart/:userName", function (req, res) {
 
 var transporter = nodemailer.createTransport( {
     service: "Yahoo",
+    // debug: true,
+    // logger: true,
     auth: {
         user: "stoll2882@yahoo.com",
         pass: "loeqjujoktmtjafc"
@@ -148,19 +151,23 @@ app.post("/contactMe", function (req, res) {
     });
 });
 
-app.post("/customOrderRequest", function (req, res) {
-    var request = req.body;
-    var name = request.name;
-    var email = request.email;
-    var specificInstructions = request.specificInstructions;
-    var quantity = request.quantity;
-    var image = request.image;
+const upload = multer({});
+
+app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity", upload.single('image'), function (req, res) {
+    var name = req.params["name"];
+    var email = req.params["email"];
+    var specificInstructions = req.params["specificInstruction"];
+    var quantity = req.params["quantity"];
+    var image = req.file;
 
     var mail = {
         from: "stoll2882@yahoo.com",
-        to: "stoll2882@yahoo.com",
-        subject: "New Message from Contact Form" + reasonForContact,
-        text: "From: " + name + "\nEmail: " + email + "\n\nSpecific Instructions: " + specificInstructions,
+        to: "sam.soccer.toll@gmail.com",
+        subject: "New Custom Order",
+        text: "From: " + name + "\nEmail: " + email + "\n\nSpecific Instructions: " + specificInstructions + "\nQuantity: " + quantity + "\n",
+        attachments: [
+            { filename: "image.jpeg", content: image.buffer, contentType: "image/jpeg" }
+        ]
     }
 
     transporter.sendMail(mail, (err, data) => {
@@ -171,6 +178,7 @@ app.post("/customOrderRequest", function (req, res) {
             })
         } else {
             console.log("sent email: " + data.response);
+            console.log("envelope: " + JSON.stringify(data.envelope));
             res.json({
              status: 'success'
             });

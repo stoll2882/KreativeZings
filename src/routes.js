@@ -25,6 +25,7 @@ function Routes () {
     const [loadingCart, setLoadingCart] = useState(false);
     const [cartTotal, setCartTotal] = useState(0);
     const [cookies, setCookie] = useCookies(["userName"]);
+    const [pictures, setPictures] = useState([]);
 
     function logOn(userName, password) {
         setAuthorized(0);
@@ -117,14 +118,20 @@ function Routes () {
     }
 
     function customOrderRequest(name, email, specificInstruction, quantity, image) {
-        var request = {
-            name: name,
-            email: email,
-            specificInstruction: specificInstruction,
-            quantity: quantity,
-            image: image
-        }
-        axios.post('http://localhost:3002/customOrderRequest/', request).then((response) => {
+        var data = new FormData();
+        // data.append('name', name);
+        // data.append('email', email);
+        // data.append('specificInstruction', specificInstruction);
+        // data.append('quantity', quantity);
+        data.append("image", image);
+        // var request = {
+        //     name: name,
+        //     email: email,
+        //     specificInstruction: specificInstruction,
+        //     quantity: quantity,
+        //     image: image
+        // }
+        axios.post('http://localhost:3002/customOrderRequest/' + name + "/" + email + "/" + specificInstruction + "/" + quantity, data).then((response) => {
             if (response.status == 201) {
                 if (response.status == 200) {
                     console.log("email sent");
@@ -185,7 +192,9 @@ function Routes () {
         setCartTotal: setCartTotal,
         updateTotalPrice: updateTotalPrice,
         contactMeRequest: contactMeRequest,
-        customOrderRequest: customOrderRequest
+        customOrderRequest: customOrderRequest,
+        pictures: pictures,
+        setPictures: setPictures
     };
 
     return (
