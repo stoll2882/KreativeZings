@@ -34,6 +34,9 @@ const NavBar = () => {
                         <LinkContainer to="Prices">
                             <Nav.Link>Prices</Nav.Link>
                         </LinkContainer>
+                        <LinkContainer to="ContactMe">
+                            <Nav.Link>Contact Me</Nav.Link>
+                        </LinkContainer>
                         <LinkContainer to="ShoppingCart" className="ml-auto">
                             <Nav.Link>Cart</Nav.Link>
                         </LinkContainer>

@@ -2,26 +2,32 @@ import React from 'react'
 import { Button, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
 import CustomOrderTitle from '../Images/CustomOrdersTitle.png';
 
-function CustomOrder() {
+const CustomOrder = () => {
+    var name;
+    var email;
+    var specificInstructions;
+    var quantity;
+    var image;
+
         return (
         <div>
             <h1><img id="custom-orders-title" src={CustomOrderTitle} alt="Custom orders"></img></h1>
             <FormGroup id="custom-order-form" className="custom-text">
                 <FormGroup>
                     <Label for="exampleName"><h4>First and Last Name</h4></Label>
-                    <Input type="name" name="name" id="exampleName" placeholder="John Doe" />
+                    <Input onChange={(e) => (name = e.target.value)} type="name" name="name" id="exampleName" placeholder="John Doe" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleEmail"><h4>Email</h4></Label>
-                    <Input type="email" name="email" id="exampleEmail" placeholder="na@example.com" />
+                    <Input onChange={(e) => (email = e.target.value)} type="email" name="email" id="exampleEmail" placeholder="na@example.com" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleText"><h4>Specific Instructions</h4></Label>
-                    <Input type="textarea" name="text" id="exampleText" />
+                    <Input onChange={(e) => (specificInstructions = e.target.value)} type="textarea" name="text" id="exampleText" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="quantity"><h4>Quantity</h4></Label>
-                    <Input type="number" name="text" id="quantity" />
+                    <Input onChange={(e) => (quantity = e.target.value)} type="number" name="text" id="quantity" />
                 </FormGroup>
                 <FormGroup>
                     <Label for="exampleFile"><h4>Image</h4></Label>
@@ -30,13 +36,13 @@ function CustomOrder() {
                     Choose an image from your own computer to upload. This will be the image on your custom sticker!
                     </FormText>
                 </FormGroup>
-                <FormGroup check>
+                {/* <FormGroup check>
                     <Label check>
                     <Input type="checkbox" />{' '}
                     Check me out
                     </Label>
-                </FormGroup>
-                <Button>Submit</Button>
+                </FormGroup> */}
+                <Button>Check Out</Button>
             </FormGroup>
         </div>
     );

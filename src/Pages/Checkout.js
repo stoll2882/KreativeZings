@@ -51,7 +51,7 @@ function ShoppingCart () {
                                 }
                             </ul>
                         </td>
-                        <td>{context.cartTotal}</td>
+                        <td>${context.cartTotal}.00</td>
                     </tr>
                 </thead>
             </Table>

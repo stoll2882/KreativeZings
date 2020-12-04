@@ -10,6 +10,7 @@
     "bootstrap": "^4.5.3",
     "express": "^4.17.1",
     "mdbreact": "^4.27.0",
+    "multer": "^1.4.2",
     "navbar": "^2.1.0",
     "postcss": "^8.1.8",
     "protypes": "^1.1.0",

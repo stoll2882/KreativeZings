@@ -15,6 +15,7 @@ import CreateAccount from './Pages/CreateAccount';
 import UserContext from './store/context';
 import axios from "axios";
 import { useCookies } from 'react-cookie';
+import context from 'react-bootstrap/esm/AccordionContext';
 
 function Routes () {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -73,6 +74,24 @@ function Routes () {
         });
     }
 
+    function contactMeRequest(name, email, reasonForContact, message) {
+        var request = {
+            name: name,
+            email: email,
+            reasonForContact: reasonForContact,
+            message: message
+        }
+        axios.post('http://localhost:3002/contactMe/', request).then((response) => {
+            if (response.status == 201) {
+                if (response.status == 200) {
+                    console.log("email sent");
+                } else {
+                    console.log("email failed to send")
+                }
+            }
+        });
+    }
+
     // function to update the cart once an item has been added
     function updateCart(userName, cart) {
         console.log("writing cart...");
@@ -85,12 +104,44 @@ function Routes () {
         });
     }
 
+    function updateTotalPrice(cart) {
+        var total = 0;
+        if (cart != undefined) {
+            var quantity;
+            for (var i = 0; i < cart.length; i++) {
+                quantity = cart[i].quantity;
+                total = total + (quantity * 3);
+            }
+        }
+        setCartTotal(total);
+    }
+
+    function customOrderRequest(name, email, specificInstruction, quantity, image) {
+        var request = {
+            name: name,
+            email: email,
+            specificInstruction: specificInstruction,
+            quantity: quantity,
+            image: image
+        }
+        axios.post('http://localhost:3002/customOrderRequest/', request).then((response) => {
+            if (response.status == 201) {
+                if (response.status == 200) {
+                    console.log("email sent");
+                } else {
+                    console.log("email failed to send")
+                }
+            }
+        });
+    }
+
     // if username does not exist already... i.e user is not logged in... cookies the username and login user
     if (userName == "" || userName == undefined) {
         let currentUserName = cookies["userName"];
         if (currentUserName != "" && currentUserName != undefined) {
             setUserName(currentUserName);
             setLoggedIn(true);
+            updateTotalPrice(cart);
         }
     }
 
@@ -100,10 +151,22 @@ function Routes () {
         axios.get('http://localhost:3002/cart/' + userName).then((response) => {
             setCart(response.data);
             setLoadingCart(false);
+            updateTotalPrice(response.data);
         }).catch((error) => {
             console.log(error);
         })
     }
+
+    // if (loggedIn == true && cart != undefined && loadingCart == false) {
+    //     var total = 0;
+    //     if (cart != undefined) {
+    //         for (var i = 0; i < cart.length; i++) {
+    //             var quantity = cart[i].quantity;
+    //             total = total + (quantity * 3);
+    //         }
+    //     }
+    //     setCartTotal(total);
+    // }
 
     const value = { 
         loggedIn: loggedIn,
@@ -119,7 +182,10 @@ function Routes () {
         updateCart: updateCart,
         setCart: setCart,
         cartTotal: cartTotal,
-        setCartTotal: setCartTotal
+        setCartTotal: setCartTotal,
+        updateTotalPrice: updateTotalPrice,
+        contactMeRequest: contactMeRequest,
+        customOrderRequest: customOrderRequest
     };
 
     return (

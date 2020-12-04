@@ -28,6 +28,7 @@ function ShoppingCart () {
         context.setCartTotal(newCartTotal);
         context.setCart(context.cart);
         context.updateCart(context.userName, context.cart);
+        context.updateTotalPrice(context.cart);
     }
 
     function getIndex(id) {
