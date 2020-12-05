@@ -4,6 +4,7 @@ import Table from 'react-bootstrap/Table';
 import CheckoutTitle from '../Images/CheckoutTitle.png';
 import { Button, FormGroup, Label, Input, Row, Col, Form } from 'reactstrap';
 import CreditCardInput from 'react-credit-card-input';
+import CheckoutForm from "../Components/CheckoutForm";
 
 import "bootstrap/dist/css/bootstrap.css";
 import UserContext from '../store/context';
@@ -46,8 +47,10 @@ function CustomOrderCheckout () {
                     </tr>
                 </thead>
             </Table>
+
+            <CheckoutForm order={{ orderType: "custom", total: context.customOrderTotal, quantity: context.customOrderQuantity }}/>
             
-            <Form id="checkout-form">
+            {/* <Form id="checkout-form">
                 <h4>Enter Information Below:</h4>
                 <br></br>
                 <Row form>
@@ -111,7 +114,7 @@ function CustomOrderCheckout () {
                     </Col>   
                 </Row>
                 <Button onClick={submitClicked}>Submit Order</Button>
-            </Form>
+            </Form> */}
         </div>
     );
 }

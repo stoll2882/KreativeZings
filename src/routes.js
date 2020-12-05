@@ -147,6 +147,23 @@ function Routes () {
         });
     }
 
+    function checkOutOrderSubmit(name, email, address, creditCardInfo, orderInfo) {
+        var checkoutInformation = {
+            name: name,
+            email: email,
+            address: address,
+            creditCardInfo: creditCardInfo,
+            orderInfo: orderInfo
+        }
+        axios.post('http://localhost:3002/orderPayment/', checkoutInformation).then((response) => {
+            if (response.status == 200) {
+                console.log("information written to back end");
+            } else {
+                console.log("information failed to write to back end")
+            }
+        });
+    }
+
     // if username does not exist already... i.e user is not logged in... cookies the username and login user
     if (userName == "" || userName == undefined) {
         let currentUserName = cookies["userName"];
@@ -221,7 +238,8 @@ function Routes () {
         customOrderTotal: customOrderTotal,
         setCustomOrderTotal: setCustomOrderTotal,
         customOrderQuantity: customOrderQuantity,
-        setCustomOrderQuantity: setCustomOrderQuantity
+        setCustomOrderQuantity: setCustomOrderQuantity,
+        checkOutOrderSubmit: checkOutOrderSubmit
     };
 
     return (

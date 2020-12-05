@@ -62,6 +62,36 @@ class userStorage {
             }
         });
     }
+
+    getCustomOrderByID(_id, callWhenDone) {
+        this.database.collection("customOrders").findOne({_id: _id}, function(err, result) {
+            console.log(result);
+            callWhenDone(result);
+        });
+    }
+
+    createCustomOrder(customOrder, callWhenDone) {
+        customOrder._id = customOrder.email;
+        this.database.collection("customOrders").insertOne(customOrder, function(err, res) {
+            console.log("item inserted");
+            callWhenDone();
+        });
+    }
+
+    getOrderPaymentByID(_id, callWhenDone) {
+        this.database.collection("orderPayments").findOne({_id: _id}, function(err, result) {
+            console.log(result);
+            callWhenDone(result);
+        });
+    }
+
+    createOrderPayment(order, callWhenDone) {
+        order._id = order.email;
+        this.database.collection("orderPayments").insertOne(order, function(err, res) {
+            console.log("item inserted");
+            callWhenDone();
+        });
+    }
 };
 
 module.exports = userStorage;

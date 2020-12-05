@@ -39,10 +39,6 @@ class CreateAccount extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // user can create an account successfully
-
-    // const context = useContext(UserContext);
-
     handleSubmit (e) {
         e.preventDefault();
 
@@ -112,7 +108,7 @@ class CreateAccount extends React.Component {
                             <Col md={6}>
                                 <FormGroup>
                                     <Label for="exampleFirstName"><h4>First Name</h4></Label>
-                                    <Input onChange={this.handleChange} type="name" name="firstName" id="exampleFirstName" placeholder="John" />
+                                    <Input onChange={this.handleChange} type="name" name="firstName" id="exampleFirstName" placeholder="John" autoComplete="off" />
                                     {this.state.formErrors.firstName.length > 0 && (
                                         <span style={{color: "red"}}>{this.state.formErrors.firstName}</span>
                                     )}
@@ -121,7 +117,7 @@ class CreateAccount extends React.Component {
                             <Col md={6}>
                                 <FormGroup>
                                     <Label for="exampleLastName"><h4>Last Name</h4></Label>
-                                    <Input onChange={this.handleChange} type="name" name="lastName" id="exampleLastName" placeholder="Doe" />
+                                    <Input onChange={this.handleChange} type="name" name="lastName" id="exampleLastName" placeholder="Doe" autoComplete="off" />
                                     {this.state.formErrors.lastName.length > 0 && (
                                         <span style={{color: "red"}}>{this.state.formErrors.lastName}</span>
                                     )}
@@ -132,7 +128,7 @@ class CreateAccount extends React.Component {
                             <Col>
                                 <FormGroup>
                                     <Label for="exampleName"><h4>Username</h4></Label>
-                                    <Input onChange={(e) => this.handleChange(e)} type="text" name="title"/>
+                                    <Input onChange={(e) => this.handleChange(e)} type="text" name="title" autoComplete="off" />
                                     {this.state.formErrors.title.length > 0 && (
                                         <span style={{color: "red"}}>{this.state.formErrors.title}</span>
                                     )}
@@ -144,7 +140,7 @@ class CreateAccount extends React.Component {
                             <Col>
                                 <FormGroup>
                                     <Label for="examplePassword"><h4>Password</h4></Label>
-                                    <Input onChange={this.handleChange} type="password" name="password"/>
+                                    <Input onChange={this.handleChange} type="password" name="password" autoComplete="off" />
                                     {this.state.formErrors.password.length > 0 && (
                                         <span style={{color: "red"}}>{this.state.formErrors.password}</span>
                                     )}
@@ -155,7 +151,7 @@ class CreateAccount extends React.Component {
                             <Col>
                                 <FormGroup>
                                     <Label for="exampleEmail>"><h4>Email</h4></Label>
-                                    <Input onChange={this.handleChange} type="text" name="email" id="exampleEmail" placeholder="john@doe.com"></Input>
+                                    <Input onChange={this.handleChange} type="text" name="email" id="exampleEmail" placeholder="john@doe.com" autoComplete="off"></Input>
                                     {this.state.formErrors.email.length > 0 && (
                                         <span style={{color: "red"}}>{this.state.formErrors.email}</span>
                                     )}
@@ -166,7 +162,7 @@ class CreateAccount extends React.Component {
                             <Col>
                                 <FormGroup>
                                     <Label for="examplePhoneNumber>"><h4>Phone Number</h4></Label>
-                                    <Input onChange={this.handleChange} type="phoneNumber" name="phoneNumber" id="examplePhoneNumber" placeholder="(888) 888-8888"></Input>
+                                    <Input onChange={this.handleChange} type="phoneNumber" name="phoneNumber" id="examplePhoneNumber" placeholder="(888) 888-8888" autoComplete="off"></Input>
                                 </FormGroup>
                             </Col>
                         </Row>

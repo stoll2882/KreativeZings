@@ -10,6 +10,7 @@ import UserContext from '../store/context';
 import LinkContainer from 'react-router-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import Checkout from '../Pages/Checkout';
+import CheckOutForm from "../Components/CheckoutForm";
 
 // user can simulate checkout process! 
 
@@ -55,8 +56,9 @@ function ShoppingCart () {
                     </tr>
                 </thead>
             </Table>
+            <CheckOutForm order={{ orderTpe: "catalog", cart: context.cart, total: context.cartTotal }}/>
             
-            <Form id="checkout-form">
+            {/* <Form id="checkout-form">
                 <h4>Enter Information Below:</h4>
                 <br></br>
                 <Row form>
@@ -120,7 +122,7 @@ function ShoppingCart () {
                     </Col>   
                 </Row>
                 <Button onClick={submitClicked}>Submit Order</Button>
-            </Form>
+            </Form> */}
         </div>
     );
 }

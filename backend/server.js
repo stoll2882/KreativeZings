@@ -113,7 +113,7 @@ app.post("/contactMe", function (req, res) {
         from: "stoll2882@yahoo.com",
         to: "stoll2882@yahoo.com",
         subject: "New Message from Contact Form" + reasonForContact,
-        text: "22From: " + email + "\nMessage: " + message
+        text: "From: " + email + "\nMessage: " + message
     }
 
     transporter.sendMail(mail, (err, data) => {
@@ -133,12 +133,29 @@ app.post("/contactMe", function (req, res) {
 
 const upload = multer({});
 
-app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity", upload.single('image'), function (req, res) {
+app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity/", upload.single('image'), function (req, res) {
     var name = req.params["name"];
     var email = req.params["email"];
     var specificInstructions = req.params["specificInstruction"];
     var quantity = req.params["quantity"];
     var image = req.file;
+
+    var customOrder = {
+        name: name,
+        email: email,
+        specificInstructions: specificInstructions,
+        quantity: quantity,
+        image: image.buffer
+    }
+
+    var storageUser = new userStorage();
+    storageUser.initialize( () => {
+        storageUser.createCustomOrder(customOrder, () => {
+            res.status(200).end();
+            console.log(JSON.stringify(customOrder));
+            console.log("item inserted");
+        });
+    });
 
     var mail = {
         from: "stoll2882@yahoo.com",
@@ -163,6 +180,46 @@ app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity", uplo
              status: 'success'
             });
         }
+    });
+});
+
+// function to get and return the cart by finding the one under the users username
+app.get("/customOrderRequest/:_id", function (req, res) {
+    var storageUser = new userStorage();
+    storageUser.initialize( () => {
+        storageUser.getCustomOrderByID(req.params["_id"], (order) => {
+            if (order != null) {
+                res.send(order).status(200).end();
+            } else {
+                res.status(404).end();
+            }
+        });
+    });
+});
+
+app.post("/orderPayment/", function (req, res) {
+    var order = req.body;
+
+    var storageUser = new userStorage();
+    storageUser.initialize( () => {
+        storageUser.createCustomOrder(order, () => {
+            res.status(200).end();
+            console.log(JSON.stringify(order));
+            console.log("order inserted");
+        });
+    });
+});
+
+app.get("/orderPayment/:_id", function (req, res) {
+    var storageUser = new userStorage();
+    storageUser.initialize( () => {
+        storageUser.getCustomOrderByID(req.params["_id"], (order) => {
+            if (order != null) {
+                res.send(order).status(200).end();
+            } else {
+                res.status(404).end();
+            }
+        });
     });
 });
 
