@@ -51,6 +51,7 @@ function CheckoutForm (props) {
         var order = props.order;
 
         context.checkOutOrderSubmit(fullName, email, fullAddress, fullCreditCardInfo, order);
+        context.getUserOrders(context.userName);
     }
     
     return (

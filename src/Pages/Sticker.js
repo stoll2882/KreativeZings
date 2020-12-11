@@ -48,7 +48,11 @@ export default class Sticker extends React.Component {
                 <Card.Body>
                     <Card.Title><h3>{this.props.name}</h3></Card.Title>
                     <Card.Text>{this.props.description}</Card.Text>
-                    <Button variant="primary" onClick={this.handleAddToCart}>Add To Cart</Button>
+                    {
+                        this.context.loggedIn ?
+                        <Button variant="primary" onClick={this.handleAddToCart}>Add To Cart</Button>:
+                        <p>(Login to purchase)</p>
+                    }
                 </Card.Body>
             </Card>
         );

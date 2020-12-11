@@ -33,6 +33,7 @@ function Routes () {
     const [contactFormSubmitted, setContactFormSubmitted] = useState(false);
     const [customOrderTotal, setCustomOrderTotal] = useState(0);
     const [customOrderQuantity, setCustomOrderQuantity] = useState(0);
+    const [userOrders, setUserOrders] = useState([]);
 
     function logOn(userName, password) {
         setAuthorized(0);
@@ -50,6 +51,7 @@ function Routes () {
                 setCookie("userName", userName);
                 setCookie("email", email);
                 setCookie("name", name);
+                getUserOrders(userName);
             } else {
                 setAuthorized(1);
                 console.log("failed to login");
@@ -66,6 +68,20 @@ function Routes () {
         setName("");
         setEmail("");
         setLoggedIn(false);
+        setAuthorized(0);
+    }
+
+    function getUserOrders(userName) {
+        axios.get('http://localhost:3002/orderPayment/' + userName).then((response) => {
+            console.log(response.status);
+            if (response.status == 200) {
+                console.log("got orders");
+                console.log(response.data);
+                setUserOrders(response.data.orderArray)
+            } 
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     function createAccount(firstName, lastName, userName, password, email, phoneNumber) {
@@ -149,6 +165,7 @@ function Routes () {
 
     function checkOutOrderSubmit(name, email, address, creditCardInfo, orderInfo) {
         var checkoutInformation = {
+            userName: userName,
             name: name,
             email: email,
             address: address,
@@ -173,6 +190,8 @@ function Routes () {
             setUserName(currentUserName);
             setLoggedIn(true);
             updateTotalPrice(cart);
+            setUserOrders([]);
+            getUserOrders(currentUserName);
             if (currentUserEmail != "" && currentUserEmail != undefined) {
                 setEmail(currentUserEmail);
             } else {
@@ -239,7 +258,10 @@ function Routes () {
         setCustomOrderTotal: setCustomOrderTotal,
         customOrderQuantity: customOrderQuantity,
         setCustomOrderQuantity: setCustomOrderQuantity,
-        checkOutOrderSubmit: checkOutOrderSubmit
+        checkOutOrderSubmit: checkOutOrderSubmit,
+        userOrders: userOrders,
+        setUserOrders: setUserOrders,
+        getUserOrders: getUserOrders
     };
 
     return (

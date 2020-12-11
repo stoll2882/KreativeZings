@@ -4,6 +4,16 @@ class userStorage {
 
     database = null;
 
+    makeid(length) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+           result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+     }
+
     initialize(callWhenDone) {
         var self = this;
         mongoClient.connect("mongodb://localhost:27017/mydb", function(err, db) {
@@ -25,7 +35,7 @@ class userStorage {
 
     createUser(user, callWhenDone) {
         this.database.collection("user").insertOne(user, function(err, res) {
-            console.log("item inserted");
+            console.log("user item inserted");
             callWhenDone();
         });
     }
@@ -39,6 +49,17 @@ class userStorage {
                 callWhenDone(result.items);
             }
         });
+    }
+
+    getOrdersByUserName(userName, callWhenDone) {
+        this.database.collection("orderPayments").find({userName: userName}).toArray(function(err, result) {
+            console.log(result);
+            if (err == null) {
+                callWhenDone(result);
+            } else {
+                callWhenDone([]);
+            }
+        })
     }
 
     updateCart(userName, cart, callWhenDone) {
@@ -73,7 +94,7 @@ class userStorage {
     createCustomOrder(customOrder, callWhenDone) {
         customOrder._id = customOrder.email;
         this.database.collection("customOrders").insertOne(customOrder, function(err, res) {
-            console.log("item inserted");
+            console.log("custom order item inserted");
             callWhenDone();
         });
     }
@@ -86,9 +107,9 @@ class userStorage {
     }
 
     createOrderPayment(order, callWhenDone) {
-        order._id = order.email;
         this.database.collection("orderPayments").insertOne(order, function(err, res) {
-            console.log("item inserted");
+            console.log(JSON.stringify(order));
+            console.log("order payment item inserted");
             callWhenDone();
         });
     }

@@ -23,7 +23,7 @@ const Login = () => {
     } else {
         return (
             <div className="custom-text" id="login">
-                <h1 id="login-title">{context.userName}</h1>
+                <h1 id="login-title">Login</h1>
                 <FormGroup id="login-form">
                     <h4>Enter username and password below to login!</h4>
                     <br></br>

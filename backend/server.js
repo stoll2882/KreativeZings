@@ -10,6 +10,7 @@ const api = require("./image.routes");
 var nodemailer = require('nodemailer');
 const creds = require('./config');
 const multer = require('multer');
+const passwords = require("./passwords");
 
 const app = express();
 
@@ -66,6 +67,21 @@ app.get("/user/:userName/:password", function (req, res) {
     });
 });
 
+
+app.get("/user/:userName/", function (req, res) {
+    var storageUser = new userStorage();
+    storageUser.initialize( () => {
+        storageUser.getUserByUserName(req.params["userName"], (user) => {
+            // if (err) throw err;
+            if (user != null) {
+                res.send(user).status(200).end();
+            } else {
+                res.status(404).end();
+            }
+        });
+    });
+});
+
 // function to update the cart by passing in the new updated cart and setting it in the database
 app.post("/cart/:userName", function (req, res) {
     var storageUser = new userStorage();
@@ -97,8 +113,8 @@ var transporter = nodemailer.createTransport( {
     // debug: true,
     // logger: true,
     auth: {
-        user: "stoll2882@yahoo.com",
-        pass: "loeqjujoktmtjafc"
+        user: passwords.email,
+        pass: passwords.password
     }
 });
 
@@ -110,8 +126,8 @@ app.post("/contactMe", function (req, res) {
     var message = request.message;
 
     var mail = {
-        from: "stoll2882@yahoo.com",
-        to: "stoll2882@yahoo.com",
+        from: passwords.email,
+        to: passwords.email,
         subject: "New Message from Contact Form" + reasonForContact,
         text: "From: " + email + "\nMessage: " + message
     }
@@ -158,8 +174,8 @@ app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity/", upl
     });
 
     var mail = {
-        from: "stoll2882@yahoo.com",
-        to: "sam.soccer.toll@gmail.com",
+        from: passwords.email,
+        to: passwords.email,
         subject: "New Custom Order",
         text: "From: " + name + "\nEmail: " + email + "\n\nSpecific Instructions: " + specificInstructions + "\nQuantity: " + quantity + "\n",
         attachments: [
@@ -199,23 +215,23 @@ app.get("/customOrderRequest/:_id", function (req, res) {
 
 app.post("/orderPayment/", function (req, res) {
     var order = req.body;
-
+    var userName = order.userName;
     var storageUser = new userStorage();
     storageUser.initialize( () => {
-        storageUser.createCustomOrder(order, () => {
+        storageUser.createOrderPayment(order, () => {
             res.status(200).end();
             console.log(JSON.stringify(order));
-            console.log("order inserted");
+            console.log("orderPayment inserted");
         });
     });
 });
 
-app.get("/orderPayment/:_id", function (req, res) {
+app.get("/orderPayment/:userName", function (req, res) {
     var storageUser = new userStorage();
     storageUser.initialize( () => {
-        storageUser.getCustomOrderByID(req.params["_id"], (order) => {
-            if (order != null) {
-                res.send(order).status(200).end();
+        storageUser.getOrdersByUserName(req.params["userName"], (orders) => {
+            if (orders != null) {
+                res.send({orderArray: orders}).status(200).end();
             } else {
                 res.status(404).end();
             }

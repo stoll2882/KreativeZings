@@ -8,18 +8,6 @@ import { ReactReduxContext } from 'react-redux';
 import UserProvider from './store/context';
 import { UserContext } from './store/context';
 
-// class App extends React.Component {
-//   render() {
-//     return (
-//       <React.Fragment>
-//         <Router>
-//           <Routes />
-//         </Router>
-//       </React.Fragment>
-//     );
-//   }
-// }
-
 const App = () => {
   return (
     // <UserContext.Provider value={userName}>
