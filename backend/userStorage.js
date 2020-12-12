@@ -43,7 +43,6 @@ class userStorage {
         password: 'required|string|min:8',
         email: 'required|email'
     }
-
     createUser(user, callWhenDone) {
         let validation = new Validator(user, this.createAccountRules);
         if (validation.passes()) {

@@ -179,10 +179,6 @@ app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity", uplo
     var quantity = req.params["quantity"];
     var image = req.file;
 
-    // if (image.buffer == undefined) {
-    //     res.send("custom image is required").status(400).end();
-    // }
-
     var customOrder = {
         name: name,
         email: email,
