@@ -43,8 +43,12 @@ app.post("/user", function (req, res) {
     var storageUser = new userStorage();
     var user = req.body;
     storageUser.initialize( () => {
-        storageUser.createUser(user, () => {
-            res.status(201).end();
+        storageUser.createUser(user, (errors) => {
+            if (errors == null) {
+                res.status(201).end();
+            } else {
+                res.send(errors).status(400).end();
+            }
         });
     });
 });
@@ -119,6 +123,7 @@ var transporter = nodemailer.createTransport( {
 });
 
 app.post("/contactMe", function (req, res) {
+
     var request = req.body;
     var name = request.name;
     var email = request.email;
@@ -132,29 +137,53 @@ app.post("/contactMe", function (req, res) {
         text: "From: " + email + "\nMessage: " + message
     }
 
-    transporter.sendMail(mail, (err, data) => {
-        if (err) {
-            console.log("failed to send email. Error: " + err);
-            res.json({
-              status: 'fail'
-            })
-        } else {
-            console.log("sent email: " + data.response);
-            res.json({
-             status: 'success'
-            });
-        }
+    var form = {
+        name: name,
+        email: email,
+        reasonForContact: reasonForContact,
+        message: message
+    }
+
+    var storageUser = new userStorage();
+    storageUser.initialize( () => {
+        storageUser.contactMeRequest(form, (errors) => {
+            if (errors == null) {
+                res.status(200).end();
+                console.log(JSON.stringify(form));
+                console.log("contactme inserted");
+                transporter.sendMail(mail, (err, data) => {
+                    if (err) {
+                        console.log("failed to send email. Error: " + err);
+                        res.json({
+                          status: 'fail'
+                        })
+                    } else {
+                        console.log("sent email: " + data.response);
+                        res.json({
+                         status: 'success'
+                        });
+                    }
+                });
+            } else {
+                console.log("returning 400...");
+                res.status(400).send(errors).end();
+            }
+        });
     });
 });
 
 const upload = multer({});
 
-app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity/", upload.single('image'), function (req, res) {
+app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity", upload.single('image'), function (req, res) {
     var name = req.params["name"];
     var email = req.params["email"];
     var specificInstructions = req.params["specificInstruction"];
     var quantity = req.params["quantity"];
     var image = req.file;
+
+    // if (image.buffer == undefined) {
+    //     res.send("custom image is required").status(400).end();
+    // }
 
     var customOrder = {
         name: name,
@@ -166,36 +195,40 @@ app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity/", upl
 
     var storageUser = new userStorage();
     storageUser.initialize( () => {
-        storageUser.createCustomOrder(customOrder, () => {
-            res.status(200).end();
-            console.log(JSON.stringify(customOrder));
-            console.log("item inserted");
+        storageUser.createCustomOrder(customOrder, (errors) => {
+            if (errors == null) {
+                res.status(200).end();
+                console.log(JSON.stringify(customOrder));
+                console.log("item inserted");
+
+                var mail = {
+                    from: passwords.email,
+                    to: passwords.email,
+                    subject: "New Custom Order",
+                    text: "From: " + name + "\nEmail: " + email + "\n\nSpecific Instructions: " + specificInstructions + "\nQuantity: " + quantity + "\n",
+                    attachments: [
+                        { filename: "image.jpeg", content: image.buffer, contentType: "image/jpeg" }
+                    ]
+                }
+            
+                transporter.sendMail(mail, (err, data) => {
+                    if (err) {
+                        console.log("failed to send email. Error: " + err);
+                        res.json({
+                          status: 'fail'
+                        })
+                    } else {
+                        console.log("sent email: " + data.response);
+                        console.log("envelope: " + JSON.stringify(data.envelope));
+                        res.json({
+                         status: 'success'
+                        });
+                    }
+                });
+            } else {
+                res.status(400).send(errors).end();
+            }
         });
-    });
-
-    var mail = {
-        from: passwords.email,
-        to: passwords.email,
-        subject: "New Custom Order",
-        text: "From: " + name + "\nEmail: " + email + "\n\nSpecific Instructions: " + specificInstructions + "\nQuantity: " + quantity + "\n",
-        attachments: [
-            { filename: "image.jpeg", content: image.buffer, contentType: "image/jpeg" }
-        ]
-    }
-
-    transporter.sendMail(mail, (err, data) => {
-        if (err) {
-            console.log("failed to send email. Error: " + err);
-            res.json({
-              status: 'fail'
-            })
-        } else {
-            console.log("sent email: " + data.response);
-            console.log("envelope: " + JSON.stringify(data.envelope));
-            res.json({
-             status: 'success'
-            });
-        }
     });
 });
 
@@ -218,10 +251,15 @@ app.post("/orderPayment/", function (req, res) {
     var userName = order.userName;
     var storageUser = new userStorage();
     storageUser.initialize( () => {
-        storageUser.createOrderPayment(order, () => {
-            res.status(200).end();
-            console.log(JSON.stringify(order));
-            console.log("orderPayment inserted");
+        storageUser.createOrderPayment(order, (errors) => {
+            if (errors == null) {
+                res.status(200).end();
+                console.log(JSON.stringify(order));
+                console.log("orderPayment inserted");
+            } else {
+                console.log("returning 400...");
+                res.status(400).send(errors).end();
+            }
         });
     });
 });

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Me from '../Images/me.jpg';
 import { Container, Row, Col } from 'react-bootstrap';
+import ProfileTitle from '../Images/ProfileTitle.png';
 import UserContext from '../store/context';
 import Table from 'react-bootstrap/Table';
 
@@ -10,11 +11,11 @@ function Profile () {
     var userOrders = context.userOrders;
 
     return (
-        <div>
+        <div style={{marginBottom: "5vh"}}>
             <Container fluid className="custom-text" style={{marginTop: "5vh"}}>
                 <Row>
                     <Col md={12}>
-                        <h1>Profile</h1>
+                        <h1><img id="profile-title" src={ProfileTitle} alt="Prices"></img></h1>
                     </Col>
                 </Row>
                 <br></br>
@@ -39,6 +40,7 @@ function Profile () {
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Order Type</th>
                         <th>Items</th>
                         <th>Price</th>
                     </tr>
@@ -49,6 +51,13 @@ function Profile () {
                             return (
                                 <tr key={order._id}>
                                     <td>{order._id}</td>
+                                    <td>
+                                        {
+                                            order.orderInfo.orderTpe == "catalog" ?
+                                            "Catalog":
+                                            "Custom"
+                                        }
+                                    </td>
                                     <td>
                                         {
                                             order.orderInfo.orderTpe == "catalog" ?

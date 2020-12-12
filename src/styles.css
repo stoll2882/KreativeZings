@@ -227,6 +227,20 @@ header li a {
     margin-bottom: -10vh;
 }
 
+#create-account-title {
+    width: 40vw;
+    margin-top: 5vh;
+}
+
+#login-title {
+    width: 20vw;
+    margin-top: 5vh;
+}
+
+#profile-title {
+    width: 40vw;
+}
+
 #checkout-form {
     width: 80vw;
     margin-left: 10vw;

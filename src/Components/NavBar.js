@@ -64,11 +64,11 @@ const NavBar = () => {
                         <LinkContainer to="Prices">
                             <Nav.Link>Prices</Nav.Link>
                         </LinkContainer>
-                        <LinkContainer to="ContactMe" className="ml-auto">
+                        <LinkContainer to="ContactMe">
                             <Nav.Link>Contact Me</Nav.Link>
                         </LinkContainer>
 
-                        <NavDropdown title={title} id="basic-nav-dropdown">
+                        <NavDropdown title={title} id="basic-nav-dropdown" className="ml-auto">
                             <LinkContainer to="Login">
                                 <NavDropdown.Item>Login</NavDropdown.Item>
                             </LinkContainer>

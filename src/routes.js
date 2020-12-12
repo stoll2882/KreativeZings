@@ -49,8 +49,8 @@ function Routes () {
                 console.log("login worked");
                 console.log(response.data);
                 setCookie("userName", userName);
-                setCookie("email", email);
-                setCookie("name", name);
+                setCookie("email", response.data.email);
+                setCookie("name", response.data.firstName + " " + response.data.lastName);
                 getUserOrders(userName);
             } else {
                 setAuthorized(1);
@@ -84,46 +84,48 @@ function Routes () {
         });
     }
 
-    function createAccount(firstName, lastName, userName, password, email, phoneNumber) {
-        var user = { 
-            firstName: firstName,
-            lastName: lastName,
-            userName: userName,
-            password: password,
-            email: email,
-            phoneNumber: phoneNumber
-        }
-        axios.post('http://localhost:3002/user/', user).then((response) => {
-            if (response.status == 201) {
-                setAuthorized(2);
-                setUserName(userName);
-                setCookie("userName", userName);
-                setEmail(email);
-                setName(firstName + " " + lastName);
-                setLoggedIn(true);
-                console.log("login worked");
-                console.log(response.data);
-            }
-        });
-    }
+    // function createAccount(firstName, lastName, userName, password, email, phoneNumber) {
+    //     var user = { 
+    //         firstName: firstName,
+    //         lastName: lastName,
+    //         userName: userName,
+    //         password: password,
+    //         email: email,
+    //         phoneNumber: phoneNumber
+    //     }
+    //     axios.post('http://localhost:3002/user/', user).then((response) => {
+    //         if (response.status == 201) {
+    //             setAuthorized(2);
+    //             setUserName(userName);
+    //             setCookie("userName", userName);
+    //             setEmail(email);
+    //             setName(firstName + " " + lastName);
+    //             setLoggedIn(true);
+    //             console.log("login worked");
+    //             console.log(response.data);
+    //         } else {
 
-    function contactMeRequest(name, email, reasonForContact, message) {
-        var request = {
-            name: name,
-            email: email,
-            reasonForContact: reasonForContact,
-            message: message
-        }
-        axios.post('http://localhost:3002/contactMe/', request).then((response) => {
-            if (response.status == 201) {
-                if (response.status == 200) {
-                    console.log("email sent");
-                } else {
-                    console.log("email failed to send")
-                }
-            }
-        });
-    }
+    //         }
+    //     });
+    // }
+
+    // function contactMeRequest(name, email, reasonForContact, message) {
+    //     var request = {
+    //         name: name,
+    //         email: email,
+    //         reasonForContact: reasonForContact,
+    //         message: message
+    //     }
+    //     axios.post('http://localhost:3002/contactMe/', request).then((response) => {
+    //         if (response.status == 201) {
+    //             if (response.status == 200) {
+    //                 console.log("email sent");
+    //             } else {
+    //                 console.log("email failed to send")
+    //             }
+    //         }
+    //     });
+    // }
 
     // function to update the cart once an item has been added
     function updateCart(userName, cart) {
@@ -149,37 +151,38 @@ function Routes () {
         setCartTotal(total);
     }
 
-    function customOrderRequest(name, email, specificInstruction, quantity, image) {
-        var data = new FormData();
-        data.append("image", image);
-        axios.post('http://localhost:3002/customOrderRequest/' + name + "/" + email + "/" + specificInstruction + "/" + quantity, data).then((response) => {
-            if (response.status == 201) {
-                if (response.status == 200) {
-                    console.log("email sent");
-                } else {
-                    console.log("email failed to send")
-                }
-            }
-        });
-    }
+    // function customOrderRequest(name, email, specificInstruction, quantity, image) {
+    //     var data = new FormData();
+    //     data.append("image", image);
+    //     axios.post('http://localhost:3002/customOrderRequest/' + name + "/" + email + "/" + specificInstruction + "/" + quantity, data).then((response) => {
+    //         if (response.status == 201) {
+    //             if (response.status == 200) {
+    //                 console.log("email sent");
+    //             } else {
+    //                 console.log("email failed to send")
+    //             }
+    //         }
+    //     });
+    // }
 
-    function checkOutOrderSubmit(name, email, address, creditCardInfo, orderInfo) {
-        var checkoutInformation = {
-            userName: userName,
-            name: name,
-            email: email,
-            address: address,
-            creditCardInfo: creditCardInfo,
-            orderInfo: orderInfo
-        }
-        axios.post('http://localhost:3002/orderPayment/', checkoutInformation).then((response) => {
-            if (response.status == 200) {
-                console.log("information written to back end");
-            } else {
-                console.log("information failed to write to back end")
-            }
-        });
-    }
+    // function checkOutOrderSubmit(name, email, address, creditCardInfo, orderInfo) {
+    //     updateCart(userName, []);
+    //     var checkoutInformation = {
+    //         userName: userName,
+    //         name: name,
+    //         email: email,
+    //         address: address,
+    //         creditCardInfo: creditCardInfo,
+    //         orderInfo: orderInfo
+    //     }
+    //     axios.post('http://localhost:3002/orderPayment/', checkoutInformation).then((response) => {
+    //         if (response.status == 200) {
+    //             console.log("information written to back end");
+    //         } else {
+    //             console.log("information failed to write to back end")
+    //         }
+    //     });
+    // }
 
     // if username does not exist already... i.e user is not logged in... cookies the username and login user
     if (userName == "" || userName == undefined) {
@@ -202,6 +205,7 @@ function Routes () {
             } else {
                 setName("no name known");
             }
+            setLoadingCart(false);
         }
         // axios.get('http://localhost:3002/user/' + userName).then((response) => {
         //     console.log(response.status);
@@ -231,6 +235,7 @@ function Routes () {
     const value = { 
         loggedIn: loggedIn,
         authorized: authorized,
+        setAuthorized: setAuthorized,
         userName: userName,
         setLoggedIn: setLoggedIn,
         setUserName: setUserName,
@@ -240,7 +245,7 @@ function Routes () {
         setName: setName,
         logOn: logOn,
         logOut: logOut,
-        createAccount: createAccount,
+        // createAccount: createAccount,
         cart: cart,
         loadingCart: loadingCart,
         updateCart: updateCart,
@@ -248,8 +253,8 @@ function Routes () {
         cartTotal: cartTotal,
         setCartTotal: setCartTotal,
         updateTotalPrice: updateTotalPrice,
-        contactMeRequest: contactMeRequest,
-        customOrderRequest: customOrderRequest,
+        // contactMeRequest: contactMeRequest,
+        // customOrderRequest: customOrderRequest,
         pictures: pictures,
         setPictures: setPictures,
         contactFormSubmitted: contactFormSubmitted,
@@ -258,10 +263,12 @@ function Routes () {
         setCustomOrderTotal: setCustomOrderTotal,
         customOrderQuantity: customOrderQuantity,
         setCustomOrderQuantity: setCustomOrderQuantity,
-        checkOutOrderSubmit: checkOutOrderSubmit,
+        // checkOutOrderSubmit: checkOutOrderSubmit,
         userOrders: userOrders,
         setUserOrders: setUserOrders,
-        getUserOrders: getUserOrders
+        getUserOrders: getUserOrders,
+        cookies: cookies,
+        setCookie: setCookie
     };
 
     return (
