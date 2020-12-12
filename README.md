@@ -2,6 +2,20 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Kreative Zings Web App Setup
+Navigate to root directory of react-app and complete the "npm install" command in order to install all neccessary dependencies.\
+Make sure MongoDB is installed on your personal computer. If it is not, you will need brew or another platform in order to install.\
+Here is a link to the MongoDB installation website that will walk you through specific instructions: https://docs.mongodb.com/manual/administration/install-community/ make sure you check it is installed before attempting run of databse.\
+Instantiate a "passwords.js" file in the backend folder. This will be used to authenticate login to send emails. A .gitignore file is used to avoid security issues and it is not included on this repository.
+
+### To run...
+Navigate into a terminal window on your computer - or a terminal within visual studio code (or your preferred platform), and navigate into "react-app".\
+Open a second terminal window on your computer or on your preferred platform, and navigate into the "backend" folder within the react-app.\
+First, do an npm build run in the react-app terminal in order to create your react build folder.\
+Then, do an npm start in that same folder to see the website come to life!\
+Lastly, run an npm start in the backend terminal so that the local database is running as the app is being used.\
+Navigate around the web app however you would like! :)
+
 ## Available Scripts
 
 In the project directory, you can run:
