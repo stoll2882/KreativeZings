@@ -58,13 +58,6 @@ function ContactMe() {
             message: message
         }
         axios.post('http://localhost:3002/contactMe/', request).then((response) => {
-            // if (response.status == 201) {
-            //     if (response.status == 200) {
-            //         console.log("email sent");
-            //     } else {
-            //         console.log("email failed to send")
-            //     }
-            // }
             console.log("email senttttttt");
             context.setContactFormSubmitted(true);
         }).catch((error) => {

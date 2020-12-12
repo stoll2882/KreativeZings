@@ -116,6 +116,9 @@ function CheckoutForm (props) {
             confirmationInfo.innerHTML = newString;
             confirmationDiv.appendChild(confirmationInfo);
             pageDiv.appendChild(confirmationDiv);
+            context.setCart([]);
+            context.setCartTotal(0);
+            context.updateCart(context.userName, []);
         }).catch((error) => {
             document.getElementById("infoTitle").innerHTML = "ERRORRRRR";
             formErrors.overallErrorMessage = "CUSTOM ORDER ERROR: " + "\n";

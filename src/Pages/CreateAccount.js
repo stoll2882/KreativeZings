@@ -64,6 +64,7 @@ class CreateAccount extends React.Component {
                 this.context.setLoggedIn(true);
                 console.log("login worked");
                 console.log(response.data);
+                this.context.logOn(user.userName, user.password);
             } else {
                 this.state.formErrors.overallErrorMessage = "CREATE ACCOUNT ERROR: " + "\n";
 
