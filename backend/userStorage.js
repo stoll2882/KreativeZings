@@ -100,7 +100,7 @@ class userStorage {
 
     updateCartRules = {
         _id: 'required',
-        items: "required"
+        items: "array"
     }
     updateCart(userName, cart, callWhenDone) {
         var cartWrapper = { 

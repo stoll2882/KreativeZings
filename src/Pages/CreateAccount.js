@@ -112,15 +112,6 @@ class CreateAccount extends React.Component {
             document.getElementById("username-input").value = "";
         }
         this.createAccount();
-
-        // if (formValid(this.state.formErrors)) {
-        //     this.context.setUserName(this.state.title);
-        //     this.context.createAccount(this.state.firstName, this.state.lastName, this.state.title, this.state.password, this.state.email, this.state.phoneNumber)
-        //     this.context.setLoggedIn(true);
-        //     console.log("submitting form... First name: " + this.state.firstName + " Last name: " + this.state.lastName);
-        // } else {
-        //     console.log("form invalid");
-        // }
     }
 
     checkUsernameAvailability() {
@@ -197,9 +188,6 @@ class CreateAccount extends React.Component {
                                     <Label for="exampleFirstName"><h4>First Name*</h4></Label>
                                     <Input onChange={this.handleChange} type="name" name="firstName" id="first-name-input" placeholder="John" autoComplete="off" />
                                     <span id="first-name-error" style={{color: "red"}}>{this.state.formErrors.firstName}</span>
-                                    {/* {this.state.formErrors.firstName.length > 0 && (
-                                        <span style={{color: "red"}}>{this.state.formErrors.firstName}</span>
-                                    )} */}
                                 </FormGroup>
                             </Col>
                             <Col md={6}>
@@ -207,9 +195,6 @@ class CreateAccount extends React.Component {
                                     <Label for="exampleLastName"><h4>Last Name*</h4></Label>
                                     <Input onChange={this.handleChange} type="name" name="lastName" id="last-name-input" placeholder="Doe" autoComplete="off" />
                                     <span id="last-name-error" style={{color: "red"}}>{this.state.formErrors.lastName}</span>
-                                    {/* {this.state.formErrors.lastName.length > 0 && (
-                                        <span style={{color: "red"}}>{this.state.formErrors.lastName}</span>
-                                    )} */}
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -219,10 +204,6 @@ class CreateAccount extends React.Component {
                                     <Label for="exampleName"><h4>Username*<h6 id="approved-username" style={{color: "red"}}>  {this.state.userNameApproved}</h6></h4></Label>
                                     <Input onChange={(e) => this.handleChange(e)} type="text" name="title" id="username-input" autoComplete="off" />
                                     <span id="username-error" style={{color: "red"}}>{this.state.formErrors.title}</span>
-                                    {/* {this.state.formErrors.title.length > 0 && (
-                                        <span style={{color: "red"}}>{this.state.formErrors.title}</span>
-                                    )} */}
-                                    {/* <Input onChange={(e) => (this.state.title = e.target.value)} type="text" /> */}
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -232,9 +213,6 @@ class CreateAccount extends React.Component {
                                     <Label for="examplePassword"><h4>Password*</h4></Label>
                                     <Input onChange={this.handleChange} type="password" name="password" id="password-input" autoComplete="off" />
                                     <span id="password-error" style={{color: "red"}}>{this.state.formErrors.password}</span>
-                                    {/* {this.state.formErrors.password.length > 0 && (
-                                        <span style={{color: "red"}}>{this.state.formErrors.password}</span>
-                                    )} */}
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -244,9 +222,6 @@ class CreateAccount extends React.Component {
                                     <Label for="exampleEmail>"><h4>Email*</h4></Label>
                                     <Input onChange={this.handleChange} type="text" name="email" id="exampleEmail" id="email-input" placeholder="john@doe.com" autoComplete="off"></Input>
                                     <span id="email-error" style={{color: "red"}}>{this.state.formErrors.email}</span>
-                                    {/* {this.state.formErrors.email.length > 0 && (
-                                        <span style={{color: "red"}}>{this.state.formErrors.email}</span>
-                                    )} */}
                                 </FormGroup>
                             </Col>
                         </Row>
@@ -263,13 +238,6 @@ class CreateAccount extends React.Component {
                                 <span id="overall-error-message" style={{color: "red"}}>{this.state.formErrors.overallErrorMessage}</span>
                             </Col>
                         </Row>
-                        {/* <Row>
-                            <Col>
-                                <FormGroup>
-                                    <Input type="button" value="Create Account" id="btnsubmit" onClick={this.handleChange} style={{boxShadow: "0px 0px 0px 3px black"}}></Input>
-                                </FormGroup>
-                            </Col>
-                        </Row> */}
                         <Button onClick={this.handleSubmit}>Create Account</Button>
                     </Form>
                 </div>

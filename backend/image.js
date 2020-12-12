@@ -13,13 +13,3 @@ var ImageSchema = new Schema({
 var Image = mongoose.model("Image", ImageSchema);
 
 module.exports = Image;
-
-    // imageName: {
-    //     type: String,
-    //     default: "none",
-    //     required: true
-    // },
-    // imageData: {
-    //     type: String,
-    //     required: true
-    // }

@@ -1,12 +1,7 @@
 import React, {useContext} from 'react';
-// import Context from '../store/context';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from "react-router-bootstrap";
 import userContext from '../store/context';
-
-// import profileIcon from '../Images/profileIcon.png';
-// import shoppingCartIcon from '../Images/shoppingCart.png';
-// import shoppingIconIcon from '../Images/shoppingIcon.png';
 
 const NavBar = () => {
     const context = useContext(userContext);
@@ -84,17 +79,3 @@ const NavBar = () => {
 }
 
 export default NavBar;
-
-{/* <Nav.Link href="./AboutMe">AboutMe</Nav.Link>
-<Nav.Link href="./Stickers">Stickers</Nav.Link>
-<Nav.Link href="./CustomOrder">Custom Order</Nav.Link>
-<Nav.Link hred="./Prices">Prices</Nav.Link>
-<Nav.Link href="./ContactMe">Contact me</Nav.Link>
-<Nav.Link href="./ShoppingCart" className="ml-auto">Cart</Nav.Link>
-<Nav.Link href="./Checkout">Checkout</Nav.Link>
-<NavDropdown title="Profile" id="basic-nav-dropdown">
-    <NavDropdown.Item href="./Login">Login</NavDropdown.Item>
-    <NavDropdown.Item href="./CreateAccount">Create Account</NavDropdown.Item>
-    <NavDropdown.Divider />
-    <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-</NavDropdown> */}

@@ -42,13 +42,10 @@ const Login = () => {
                     <FormGroup>
                         <Label for="exampleName"><h4>Username</h4></Label>
                         <Input onChange={handleChange} type="text" id="username-input" name="title"/>
-                        {/* <Input onChange={(e) => (title = e.target.value)} type="text" id="username-input"/> */}
                     </FormGroup>
                     <FormGroup>
                         <Label for="examplePassword"><h4>Password</h4></Label>
                         <Input onChange={handleChange} type="password" id="password-input" name="password"/>
-
-                        {/* <Input onChange={(e) => (password = e.target.value)} type="password" id="password-input"/> */}
                     </FormGroup>
                     {
                         context.authorized == 1 && context.authorized != 0 ?

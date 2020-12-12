@@ -86,11 +86,6 @@ function ContactMe() {
     }
 
     function submit() {
-        // if (context.loggedIn == false) {
-        //     context.setUserName(name);
-        // }
-        // context.setContactFormSubmitted(true);
-        // context.contactMeRequest(name, email, reasonForContactString, message);
         contactMeRequest();
     }
 
@@ -149,21 +144,18 @@ function ContactMe() {
                         <FormGroup check>
                         <Label check>
                             <Input onChange={checkRadios} type="radio" id="radio1" value="Specific Request"/>{' '}
-                            {/* <Input onChange={((e) => change(e.target.value, "Specific request"))} type="radio" id="radio1" value="Specific Request"/>{' '} */}
                             Specific request
                         </Label>
                     </FormGroup>
                     <FormGroup check>
                         <Label check>
                             <Input onChange={checkRadios} type="radio" id="radio2" value="Problem with my Order"/>{' '}
-                            {/* <Input onChange={(e) => change(e.target.value, "Problem with my order")} type="radio" id="radio2" value="Problem with my Order"/>{' '} */}
                             Problem with my order
                         </Label>
                     </FormGroup>
                     <FormGroup check>
                         <Label check>
                             <Input onChange={checkRadios} type="radio" id="radio3" value="Just wanted to say hi :)"/>{' '}
-                            {/* <Input onChange={(e) => change(e.target.value, "Just wanted to say hi :)")} type="radio" id="radio3" value="Just wanted to say hi :)"/>{' '} */}
                             Just wanted to say hi :)
                         </Label>
                     </FormGroup>

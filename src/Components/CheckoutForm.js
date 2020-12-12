@@ -17,8 +17,6 @@ import axios from "axios";
 function CheckoutForm (props) {
     const context = useContext(UserContext);
 
-    // var firstName;
-    // var lastName;
     var name = context.name;
     var email = context.email;
     var shippingAddress;
@@ -39,35 +37,11 @@ function CheckoutForm (props) {
     }
 
     function submitClicked() {
-        // var pageDiv = document.getElementById("checkout-div")
-        // var form = document.getElementById("checkout-form")
-        // form.classList.add("hide");
-
-        // let confirmationDiv = document.createElement("div");
-        // let confirmationInfo = document.createElement("h2");
-        // let newString = "Your order has been submitted. Thank you for your puchase!"
-        // confirmationInfo.innerHTML = newString;
-        // confirmationDiv.appendChild(confirmationInfo);
-        // pageDiv.appendChild(confirmationDiv);
-
         document.getElementById("exampleAddress").innerHTML = "";
         document.getElementById("exampleCity").innerHTML = "";
         document.getElementById("exampleState").innerHTML = "";
         document.getElementById("exampleZip").innerHTML = "";
-        // document.getElementById("creditInput").innerHTML = "";
 
-        // var fullName = firstName + " " + lastName;
-        // var fullName = name;
-        // var fullAddress = shippingAddress + ", " + address2 + ", " + city + " " + state + ", " + zip;
-        // var fullCreditCardInfo = {
-        //     number: creditCardNumber,
-        //     expiry: expiration,
-        //     cvc: cardCvc
-        // }
-
-        // var order = props.order;
-
-        // context.checkOutOrderSubmit(fullName, email, fullAddress, fullCreditCardInfo, order);
         checkOutOrderSubmit();
     }
 
@@ -127,41 +101,32 @@ function CheckoutForm (props) {
 
             if (response.data.name != null) {
                 formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data.name + "\n";
-                // document.getElementById("overall-error-message").innerHTML = this.state.formErrors.overallErrorMessage;
             }
             if (response.data.email != null) {
                 formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data.email + "\n";
-                // document.getElementById("overall-error-message").innerHTML = this.state.formErrors.overallErrorMessage;
             }
             if (response.data.userName != null) {
                 formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data.userName + "\n";
-                // document.getElementById("overall-error-message").innerHTML = this.state.formErrors.overallErrorMessage;
             }
             if (response.data.address != null) {
                 formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data.address + "\n";
-                // document.getElementById("overall-error-message").innerHTML = this.state.formErrors.overallErrorMessage;
             }
             if (response.data["creditCardInfo.number"] != null) {
                 formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data["creditCardInfo.number"] + "\n";
-                // document.getElementById("overall-error-message").innerHTML = this.state.formErrors.overallErrorMessage;
             }
             if (response.data["creditCardInfo.expiry"] != null) {
                 formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data["creditCardInfo.expiry"] + "\n";
-                // document.getElementById("overall-error-message").innerHTML = this.state.formErrors.overallErrorMessage;
             }
             if (response.data["creditCardInfo.cvc"] != null) {
                 formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data["creditCardInfo.cvc"] + "\n";
-                // document.getElementById("overall-error-message").innerHTML = this.state.formErrors.overallErrorMessage;
             }
             document.getElementById("overall-error-message").innerHTML = formErrors.overallErrorMessage;
             console.log("information failed to write to back end")
-            // }
         });
     }
 
     function handleChange(e) {
         e.preventDefault();
-        // document.getElementById("overall-error-message").innerHTML = "";
 
         const { name, value } = e.target;
         let formErrorList = formErrors;
@@ -205,30 +170,13 @@ function CheckoutForm (props) {
                 <Col md={12}>
                     <FormGroup>
                         <Label for="exampleName"><h4>Name:<br></br> {name}</h4></Label>
-                        {/* <Input onChange={(e) => (firstName = e.target.value)} type="name" name="name" id="exampleFirstName" placeholder="John" autoComplete="off" /> */}
                     </FormGroup>
                 </Col>
             </Row>
-            {/* <Row form>
-                <Col md={6}>
-                    <FormGroup>
-                        <Label for="exampleFirstName"><h4>First Name</h4></Label>
-                        <Input onChange={(e) => (firstName = e.target.value)} type="name" name="name" id="exampleFirstName" placeholder="John" autoComplete="off" />
-                    </FormGroup>
-                </Col>
-                <Col md={6}>
-                    <FormGroup>
-                        <Label for="exampleLastName"><h4>Last Name</h4></Label>
-                        <Input onChange={(e) => (lastName = e.target.value)} type="name" name="name" id="exampleLastName" placeholder="Doe" autoComplete="off"/>
-                    </FormGroup>
-                </Col>
-            </Row> */}
             <Row>
                 <Col>
                     <FormGroup md={12}>
                         <Label for="exampleEmail"><h4>Email:<br></br> {email}</h4></Label>
-                        {/* <Input onChange={handleChange} type="text" name="email" id="exampleEmail" placeholder="name@example.com" autoComplete="off" /> */}
-                        {/* <Input onChange={(e) => (email = e.target.value)} type="text" name="email" id="exampleEmail" placeholder="name@example.com" autoComplete="off" /> */}
                     </FormGroup>  
                 </Col>     
             </Row>
@@ -238,7 +186,6 @@ function CheckoutForm (props) {
                         <Label for="exampleAddress"><h4>Shipping Address</h4></Label>
                         <Input onChange={handleChange} type="text" name="addressMain" id="exampleAddress" placeholder="1234 Main Ave" autoComplete="off" />
                         <span id="address-main-error" style={{color: "red"}}>{formErrors.addressState}</span>
-                        {/* <Input onChange={(e) => (shippingAddress = e.target.value)} type="text" name="address" id="exampleAddress" placeholder="1234 Main Ave" autoComplete="off" /> */}
                     </FormGroup>  
                 </Col>     
             </Row>
@@ -247,7 +194,6 @@ function CheckoutForm (props) {
                     <FormGroup md={12}>
                         <Label for="exampleAddressL2"><h4>Address 2</h4></Label>
                         <Input onChange={handleChange} type="text" name="addressSecond" id="exampleAddressL2" placeholder="Apartment, Floor, etc." autoComplete="off" />
-                        {/* <Input onChange={(e) => (address2 = e.target.value)} type="text" name="addressSecond" id="exampleAddressL2" placeholder="Apartment, Floor, etc." autoComplete="off" /> */}
                     </FormGroup>  
                 </Col>
             </Row>
@@ -257,7 +203,6 @@ function CheckoutForm (props) {
                         <Label for="exampleCity"><h4>City</h4></Label>
                         <Input onChange={handleChange} type="text" name="addressCity" id="exampleCity" autoComplete="off" />
                         <span id="address-city-error" style={{color: "red"}}>{formErrors.addressCity}</span>
-                        {/* <Input onChange={(e) => (city = e.target.value)} type="text" name="addressCity" id="exampleCity" autoComplete="off" /> */}
                     </FormGroup>  
                 </Col>
                 <Col>
@@ -265,7 +210,6 @@ function CheckoutForm (props) {
                         <Label for="exampleState"><h4>State</h4></Label>
                         <Input onChange={handleChange} type="text" name="addressState" id="exampleState" autoComplete="off" />
                         <span id="address-state-error" style={{color: "red"}}>{formErrors.addressState}</span>
-                        {/* <Input onChange={(e) => (state = e.target.value)} type="text" name="addressState" id="exampleState" autoComplete="off" /> */}
                     </FormGroup>  
                 </Col>  
                 <Col>
@@ -273,7 +217,6 @@ function CheckoutForm (props) {
                         <Label for="exampleZip"><h4>Zip Code</h4></Label>
                         <Input onChange={handleChange} type="text" name="addressZip" id="exampleZip" autoComplete="off" />
                         <span id="address-zip-error" style={{color: "red"}}>{formErrors.addressZip}</span>
-                        {/* <Input onChange={(e) => (zip = e.target.value)} type="text" name="addressZip" id="exampleZip" autoComplete="off" /> */}
                     </FormGroup>  
                 </Col>       
             </Row>

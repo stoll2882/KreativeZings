@@ -21,31 +21,11 @@ function Prices () {
                         <td>Pre-Designed Sticker</td>
                         <td>$3.00</td>
                     </tr>
-                    {/* <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td>Medium: $6.00</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td>Large: $10.00</td>
-                    </tr> */}
                     <tr>
                         <td>2</td>
                         <td>Custom Image Sticker</td>
                         <td>$6.00</td>
                     </tr>
-                    {/* <tr>
-                        <td>5</td>
-                        <td></td>
-                        <td>Medium: $8.00</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td></td>
-                        <td>Large: $13.00</td>
-                    </tr> */}
                 </thead>
             </Table>
         </div>
