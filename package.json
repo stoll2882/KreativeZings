@@ -1,0 +1,11 @@
+{
+  "name": "finalproject",
+  "version": "0.0.1",
+  "description": "Final Project by Sam Toll",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "stoll2882",
+  "license": "ISC"
+}
