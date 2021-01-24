@@ -9,6 +9,7 @@ var nodemailer = require('nodemailer');
 const creds = require('./config');
 const multer = require('multer');
 const passwords = require("./passwords");
+const process = require("process")
 
 const app = express();
 
@@ -115,8 +116,8 @@ var transporter = nodemailer.createTransport( {
     // debug: true,
     // logger: true,
     auth: {
-        user: passwords.email,
-        pass: passwords.password
+        user: process.env.EMAIL_USERNAME || passwords.email,
+        pass: process.env.EMAIL_PASSWORD || passwords.password
     }
 });
 
