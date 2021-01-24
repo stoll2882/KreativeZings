@@ -8,8 +8,16 @@ const User = require("./user.js");
 var nodemailer = require('nodemailer');
 const creds = require('./config');
 const multer = require('multer');
-const passwords = require("./passwords");
+
+try {
+    var passwords = require("./passwords");
+} catch(error) {
+    console.log("No password present, will failback to environment variables");
+}
 const process = require("process");
+
+var emailUserName = (passwords != null) ? passwords.email : process.env.EMAIL_USERNAME;
+var emailPassword = (passwords != null) ? passwords.password :  process.env.EMAIL_PASSWORD;
 
 const app = express();
 
@@ -116,8 +124,8 @@ var transporter = nodemailer.createTransport( {
     // debug: true,
     // logger: true,
     auth: {
-        user: process.env.EMAIL_USERNAME || passwords.email,
-        pass: process.env.EMAIL_PASSWORD || passwords.password
+        user: emailUserName,
+        pass: emailPassword
     }
 });
 
@@ -130,8 +138,8 @@ app.post("/contactMe", function (req, res) {
     var message = request.message;
 
     var mail = {
-        from: passwords.email,
-        to: passwords.email,
+        from: emailUserName,
+        to: emailUserName,
         subject: "New Message from Contact Form" + reasonForContact,
         text: "From: " + email + "\nMessage: " + message
     }
@@ -197,8 +205,8 @@ app.post("/customOrderRequest/:name/:email/:specificInstruction/:quantity", uplo
                 console.log("item inserted");
 
                 var mail = {
-                    from: passwords.email,
-                    to: passwords.email,
+                    from: emailUserName,
+                    to: emailUserName,
                     subject: "New Custom Order",
                     text: "From: " + name + "\nEmail: " + email + "\n\nSpecific Instructions: " + specificInstructions + "\nQuantity: " + quantity + "\n",
                     attachments: [
