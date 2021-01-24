@@ -9,7 +9,7 @@ var nodemailer = require('nodemailer');
 const creds = require('./config');
 const multer = require('multer');
 const passwords = require("./passwords");
-const process = require("process")
+const process = require("process");
 
 const app = express();
 
