@@ -3,11 +3,11 @@ const mongoClient = require("mongodb").MongoClient;
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const userStorage = require("./userStorage");
-const User = require("./user.js");
 var nodemailer = require('nodemailer');
-const creds = require('./config');
 const multer = require('multer');
+const path = require('path');
+const userStorage = require("./backend/userStorage");
+const User = require("./backend/user.js");
 
 try {
     var passwords = require("./passwords");
@@ -29,16 +29,12 @@ app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
+app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3002;
@@ -280,4 +276,18 @@ app.get("/orderPayment/:userName", function (req, res) {
     });
 });
 
-app.use(express.json());
+if(process.env.ENVIRONMENT == "production") {
+
+    // Set static folder
+    app.use(express.static('client/build'));
+    
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+} else {
+    // simple route
+    app.get("/", (req, res) => {
+    res.json({ message: "Welcome to bezkoder application." });
+    });
+}
+

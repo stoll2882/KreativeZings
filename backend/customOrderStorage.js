@@ -1,7 +1,7 @@
 let express = require('express'),
     multer = require('multer'),
     mongoose = require('mongoose'),
-    uuidv4 = require('../node_modules2/uuid/v4'),
+    uuidv4 = require('uuid/v4'),
     router = express.Router();
 
 const DIR = './public/';
