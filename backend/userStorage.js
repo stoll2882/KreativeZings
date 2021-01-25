@@ -1,6 +1,26 @@
 const mongoClient = require("mongodb").MongoClient; 
 var sanitize = require("mongo-sanitize");
 let Validator = require("validatorjs");
+const process = require("process");
+
+
+/*
+
+
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://dbadmin:<password>@cluster0.s7hmx.mongodb.net/<dbname>?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+6CgvGv4TAqd3UuMY
+
+mongodb://localhost:27017/mydb
+
+*/
 
 class userStorage {
 
@@ -18,7 +38,9 @@ class userStorage {
 
     initialize(callWhenDone) {
         var self = this;
-        mongoClient.connect("mongodb://localhost:27017/mydb", function(err, db) {
+        // var dbUrl = "mongodb://localhost:27017/mydb";
+        var dbUrl = process.env.DB_URL;
+        mongoClient.connect(dbUrl, function(err, db) {
             if (err) {
                 throw err;
             }
