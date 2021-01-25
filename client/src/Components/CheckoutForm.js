@@ -11,6 +11,7 @@ import LinkContainer from 'react-router-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import Checkout from '../Pages/Checkout';
 import axios from "axios";
+import baseUrl from '../baseurl';
 
 // user can simulate checkout process! 
 
@@ -77,7 +78,7 @@ function CheckoutForm (props) {
             creditCardInfo: fullCreditCardInfo,
             orderInfo: order
         }
-        axios.post('http://localhost:3002/orderPayment/', checkoutInformation).then((response) => {
+        axios.post(baseUrl() + 'orderPayment/', checkoutInformation).then((response) => {
             context.getUserOrders(context.userName);
             console.log("information written to back end");
             var pageDiv = document.getElementById("checkout-div")

@@ -5,6 +5,7 @@ import ImageUploader from 'react-images-upload';
 import UserContext from '../store/context';
 import { Link, useHistory } from 'react-router-dom';
 import axios from "axios";
+import baseUrl from '../baseurl';
 
 const formValid = formErrors => {
     let valid = true;
@@ -56,7 +57,7 @@ const CustomOrder = () => {
     function customOrderRequest() {
         var data = new FormData();
         data.append("image", context.pictures[0]);
-        let url = 'http://localhost:3002/customOrderRequest/' + name + "/" + email + "/" + specificInstructions + "/" + quantity;
+        let url = baseUrl() + 'customOrderRequest/' + name + "/" + email + "/" + specificInstructions + "/" + quantity;
         console.log('making request to...' + url);
         formErrors.overallErrorMessage = "";
         axios.post(url, data).then((response) => {

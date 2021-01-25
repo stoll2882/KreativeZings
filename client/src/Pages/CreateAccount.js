@@ -5,6 +5,7 @@ import { Button, FormGroup, Label, Input, FormText, Container, Form, Row, Col } 
 import "bootstrap/dist/css/bootstrap.css";
 import UserContext from '../store/context';
 import axios from "axios";
+import baseUrl from '../baseurl';
 
 const emailRegrex = RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
 
@@ -54,7 +55,7 @@ class CreateAccount extends React.Component {
             email: this.state.email,
             phoneNumber: this.state.phoneNumber
         }
-        axios.post('http://localhost:3002/user/', user).then((response) => {
+        axios.post(baseUrl() + 'user/', user).then((response) => {
             if (response.status == 201 && formValid(this.state.formErrors) == true) {
                 this.context.setAuthorized(2);
                 this.context.setUserName(this.state.userName);
@@ -116,7 +117,7 @@ class CreateAccount extends React.Component {
 
     checkUsernameAvailability() {
         let formErrorList = this.state.formErrors;
-        axios.get('http://localhost:3002/user/' + this.state.title).then((response) => {
+        axios.get(baseUrl() + 'user/' + this.state.title).then((response) => {
             this.setState({formErrorList, userNameApproved: "This username is already taken"});
             return true;
         }).catch((error) => {

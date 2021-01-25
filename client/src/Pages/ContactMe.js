@@ -3,6 +3,7 @@ import { Button, FormGroup, Label, Input, FormText, Container } from 'reactstrap
 import ContactMeTitle from '../Images/ContactMeTitle.png';
 import UserContext from '../store/context';
 import axios from 'axios';
+import baseUrl from '../baseurl';
 
 const emailRegrex = RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
 
@@ -57,7 +58,7 @@ function ContactMe() {
             reasonForContact: reasonForContactString,
             message: message
         }
-        axios.post('http://localhost:3002/contactMe/', request).then((response) => {
+        axios.post(baseUrl() + 'contactMe/', request).then((response) => {
             console.log("email senttttttt");
             context.setContactFormSubmitted(true);
         }).catch((error) => {

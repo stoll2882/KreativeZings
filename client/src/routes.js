@@ -18,6 +18,7 @@ import axios from "axios";
 import { useCookies } from 'react-cookie';
 import context from 'react-bootstrap/esm/AccordionContext';
 import Profile from './DetailPages/profile';
+import baseUrl from './baseurl';
 
 function Routes () {
     const [loggedIn, setLoggedIn] = useState(false);
@@ -35,10 +36,12 @@ function Routes () {
     const [customOrderQuantity, setCustomOrderQuantity] = useState(0);
     const [userOrders, setUserOrders] = useState([]);
 
+    console.log(baseUrl());
+
     function logOn(userName, password) {
         setAuthorized(0);
         console.log("trying to logon" + userName);
-        axios.get('http://localhost:3002/user/' + userName + '/' + password).then((response) => {
+        axios.get(baseUrl() + 'user/' + userName + '/' + password).then((response) => {
             console.log(response.status);
             if (response.status == 200) {
                 setAuthorized(2);
@@ -72,7 +75,7 @@ function Routes () {
     }
 
     function getUserOrders(userName) {
-        axios.get('http://localhost:3002/orderPayment/' + userName).then((response) => {
+        axios.get(baseUrl() + 'orderPayment/' + userName).then((response) => {
             console.log(response.status);
             if (response.status == 200) {
                 console.log("got orders");
@@ -87,7 +90,7 @@ function Routes () {
     // function to update the cart once an item has been added
     function updateCart(userName, cart) {
         console.log("writing cart...");
-        axios.post('http://localhost:3002/cart/' + userName, cart).then((response) => {
+        axios.post(baseUrl() + 'cart/' + userName, cart).then((response) => {
             if (response.status == 200) {
                 console.log("cart written to back end");
             } else {
@@ -136,7 +139,7 @@ function Routes () {
     // say a different message if cartloading is true
     if (loggedIn == true && cart == undefined && loadingCart == false) {
         setLoadingCart(true);
-        axios.get('http://localhost:3002/cart/' + userName).then((response) => {
+        axios.get(baseUrl() + 'cart/' + userName).then((response) => {
             setCart(response.data);
             setLoadingCart(false);
             updateTotalPrice(response.data);
