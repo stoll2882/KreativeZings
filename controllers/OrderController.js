@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const serverConfig = require('../config/serverconfig');
-const { model } = require("./image");
 const upload = multer({});
 const express = require("express");
 const userStorage = require('./userStorage');
