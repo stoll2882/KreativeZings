@@ -19,7 +19,9 @@ class UserService {
 
     async authedGetUser(userName, password) { 
         const user = await this.getUserByUserName(userName);
-        if(user.password == password) {
+        if(user == null) {
+            return null;
+        } else if(user.password == password) {
             return user;
         } else {
             return null;
