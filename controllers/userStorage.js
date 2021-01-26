@@ -3,25 +3,6 @@ var sanitize = require("mongo-sanitize");
 let Validator = require("validatorjs");
 const process = require("process");
 
-
-/*
-
-
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://dbadmin:<password>@cluster0.s7hmx.mongodb.net/<dbname>?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
-
-6CgvGv4TAqd3UuMY
-
-mongodb://localhost:27017/mydb
-
-*/
-
 class userStorage {
 
     database = null;
@@ -50,7 +31,7 @@ class userStorage {
         });
     }
 
-    getUserByUserName(userName, callWhenDone) {
+    /*getUserByUserName(userName, callWhenDone) {
         var cleanUserName = sanitize(userName);
         this.database.collection("user").findOne({userName: cleanUserName}, function(err, result) {
             console.log(result);
@@ -75,7 +56,7 @@ class userStorage {
         } else {
             callWhenDone(validation.errors.all());
         }
-    }
+    }*/
 
     getCart(userName, callWhenDone) {
         var cleanUserName = sanitize(userName);
