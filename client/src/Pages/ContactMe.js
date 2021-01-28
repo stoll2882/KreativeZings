@@ -1,183 +1,71 @@
-import React, { useContext } from 'react'
-import { Button, FormGroup, Label, Input, FormText, Container } from 'reactstrap';
+import React, { useContext, useState } from 'react'
 import ContactMeTitle from '../Images/ContactMeTitle.png';
+import { useForm } from 'react-hook-form';
+import UtilityService from '../services/UtilityService';
 import UserContext from '../store/context';
-import axios from 'axios';
-import baseUrl from '../baseurl';
 
-const emailRegrex = RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+export default function ContactMe() {
 
-const formValid = formErrors => {
-    let valid = true;
-    Object.values(formErrors).forEach( val => {
-        val.length > 0 && (valid = false);
-    });
-    return valid;
-}
-
-function ContactMe() {
-
+    const { register, errors, handleSubmit, formState, reset } = useForm();
     const context = useContext(UserContext);
+    const [errorMessage, setErrorMessage] = useState("");
 
-    var fullName;
-    var email;
-    var reasonForContactString = "";
-    var message;
-
-    var formErrors = {
-        name: "",
-        email: "",
-        message: "",
-        overallErrorMessage: ""
-    }
-
-    function checkRadios() {
-        reasonForContactString = "";
-        if (document.getElementById("radio1").checked) {
-            reasonForContactString = reasonForContactString + ", " + document.getElementById("radio1").value;
-        } 
-        if (document.getElementById("radio2").checked) {
-            reasonForContactString = reasonForContactString + ", " + document.getElementById("radio2").value;
-        }
-        if (document.getElementById("radio3").checked) {
-            reasonForContactString = reasonForContactString + ", " + document.getElementById("radio3").value;
-        }
-        if (document.getElementById("radio4").checked) {
-            reasonForContactString = reasonForContactString + ", " + document.getElementById("radio4").value;
-        }
-    }
-
-    function contactMeRequest() {
-        checkRadios();
-        if (reasonForContactString == "" || reasonForContactString == undefined || reasonForContactString == null) {
-            reasonForContactString = "no reason";
-        }
-        var request = {
-            name: fullName,
-            email: email,
-            reasonForContact: reasonForContactString,
-            message: message
-        }
-        axios.post(baseUrl() + 'contactMe/', request).then((response) => {
-            console.log("email senttttttt");
-            context.setContactFormSubmitted(true);
-        }).catch((error) => {
-            document.getElementById("exampleName").value = "";
-            document.getElementById("exampleEmail").value = "";
-            document.getElementById("exampleMessage").value = "";
-
-            formErrors.overallErrorMessage = "CREATE ACCOUNT ERROR: " + "\n";
-            console.log("email failed to send")
-
-            var response = error.response;
-
-            if (response.data.name != null) {
-                formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data.name + "\n";
+    async function onSubmit(data) {
+        document.getElementById("submit-button").disabled = true;
+        try {
+            var result = await UtilityService.contactMeRequest(data.contactName, data.contactEmail, data.contactReason, data.contactMessage);
+            setErrorMessage("");
+        } catch(error) {
+            var newErrorMessage = "ERRORS: "
+            for(var x = 0; x < error.response.data.message.length; x++) {
+                newErrorMessage = newErrorMessage + "Error["+x+"]: "+error.response.data.message[x];
             }
-            if (response.data.email != null) {
-                formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data.email + "\n";
-            }
-            if (response.data.message != null) {
-                formErrors.overallErrorMessage = formErrors.overallErrorMessage + response.data.message + "\n";
-            }
-
-            document.getElementById("overall-error-message").innerHTML = formErrors.overallErrorMessage;
-            console.log("email failed to send from backend...");
-        });
+            setErrorMessage(newErrorMessage);
+        }
+        document.getElementById("submit-button").disabled = false;
+        context.setContactFormSubmitted(true);
     }
 
-    function submit() {
-        contactMeRequest();
-    }
-
-    function handleChange(e) {
+    function handleClearForm(e) {
         e.preventDefault();
-        document.getElementById("overall-error-message").innerHTML = "";
-
-        const { name, value } = e.target;
-        let formErrorList = formErrors;
-
-        switch(name) {
-            case "name":
-                formErrorList.name = value.length < 3 ? 
-                "minimum 3 characters required": ""
-                document.getElementById("name-error").innerHTML = formErrors.name;
-                fullName = value;
-                break;
-            case "message":
-                formErrorList.message = value.length < 3 ? 
-                "minimum 3 characters required": ""
-                document.getElementById("message-error").innerHTML = formErrors.message;
-                message = value;
-                break;
-            case "email":                
-                formErrorList.email = emailRegrex.test(value) && value.length > 0 ? 
-                "": "invalid email address"
-                document.getElementById("email-error").innerHTML = formErrors.email;
-                email = value;
-                break;
-        }
+        context.setContactFormSubmitted(false);
+        reset();
     }
 
-    if (context.contactFormSubmitted == true) {
+    const reasons = [ "Specific Request", "Problem with my Order", "Just wanted to say hi :)", "other"];
+
+    React.useEffect(() => {},[formState]);    
+
+    if (context.contactFormSubmitted) {
         return (
-            <h1 className="welcome-div">Thank you for contacting me, {context.userName}! I will get back to you as soon as possible.</h1>
+            <div>
+                <h1>Thank you!</h1>  
+                <p>{errorMessage}</p>
+                <button onClick={handleClearForm}>Send More Feedback</button>
+            </div>
         );
     } else {
         return (
             <div className="custom-text">
                 <h1><img id="contact-me-title" src={ContactMeTitle} alt="Contact Me"></img></h1>
-                <FormGroup id="contact-me-form">
-                    <h4>Please let me know if there is anything I can do to improve your experience, or if you just want to say hi!</h4>
-                    <br></br>
-                    <FormGroup>
-                        <Label for="exampleName"><h4>First and Last Name</h4></Label>
-                        <Input onChange={handleChange} type="name" name="name" id="exampleName" placeholder="John Doe" />
-                        <span id="name-error" style={{color: "red"}}>{formErrors.name}</span>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="exampleEmail"><h4>Email Reply Should be Sent to</h4></Label>
-                        <Input onChange={handleChange} type="email" name="email" id="exampleEmail" placeholder="na@example.com" />
-                        <span id="email-error" style={{color: "red"}}>{formErrors.email}</span>
-                    </FormGroup>
-                    <FormGroup tag="fieldset">
-                        <legend><h4>Reason for Contact</h4></legend>
-                        <FormGroup check>
-                        <Label check>
-                            <Input onChange={checkRadios} type="radio" id="radio1" value="Specific Request"/>{' '}
-                            Specific request
-                        </Label>
-                    </FormGroup>
-                    <FormGroup check>
-                        <Label check>
-                            <Input onChange={checkRadios} type="radio" id="radio2" value="Problem with my Order"/>{' '}
-                            Problem with my order
-                        </Label>
-                    </FormGroup>
-                    <FormGroup check>
-                        <Label check>
-                            <Input onChange={checkRadios} type="radio" id="radio3" value="Just wanted to say hi :)"/>{' '}
-                            Just wanted to say hi :)
-                        </Label>
-                    </FormGroup>
-                    <FormGroup check>
-                        <Label check>
-                            <Input onChange={checkRadios} type="radio" id="radio4" value="other"/>{' '}
-                            Other
-                        </Label>
-                        </FormGroup>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="exampleText"><h4>Message</h4></Label>
-                        <Input onChange={handleChange} type="textarea" name="message" id="exampleMessage" />
-                        <span id="message-error" style={{color: "red"}}>{formErrors.message}</span>
-                    </FormGroup>
-                    <Button onClick={submit}>Submit</Button>
-                    <span id="overall-error-message" style={{color: "red"}}>{formErrors.overallErrorMessage}</span>
-                </FormGroup>
+                <form className="form" onSubmit={handleSubmit(onSubmit)} id="contact-me-form">
+                    <label><h4>Full Name</h4></label>
+                    <input className="form-input" name="contactName" placeholder="John Doe" ref={register({required: true, minLength: 2})} />
+                    <span className="form-error-label">{errors.contactName && "Need to specific a name to contact over 5 characters"}</span>
+                    <label><h4>Your E-mail</h4></label>
+                    <input className="form-input" name="contactEmail" placeholder="na@example.com" ref={register({required: true, minLength: 5, pattern: UtilityService.EMAIL_REGEX_PATTERN  })} />
+                    <span className="form-error-label">{errors.contactEmail && "Need a valid e-mail address"}</span>
+                    <label><h4>Reason for contact</h4></label>
+                    <select className="form-input" name="contactReason" ref={register}>
+                        { reasons.map((reason) => (<option id="id-{reason}" value={reason}>{reason}</option>))}
+                    </select>
+                    <label><h4>Additional Information</h4></label>
+                    <textarea className="form-input" name="contactMessage" placeholder="Any additional information" ref={register}/>
+                    <input id="submit-button" type="submit"/>
+                </form>
             </div>
         );
     }
 }
 
-export default ContactMe;
+

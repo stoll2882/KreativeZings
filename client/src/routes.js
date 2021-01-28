@@ -16,7 +16,6 @@ import CreateAccount from './Pages/CreateAccount';
 import UserContext from './store/context';
 import axios from "axios";
 import { useCookies } from 'react-cookie';
-import context from 'react-bootstrap/esm/AccordionContext';
 import Profile from './DetailPages/profile';
 import baseUrl from './baseurl';
 
