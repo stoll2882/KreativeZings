@@ -15,7 +15,7 @@ function ShoppingCart () {
     if (context.cart != null) {
       cartLength = context.cart.length;
     } else {
-      cartLength = 0;
+      cartLength = 0; 
     }
 
     // shopping cart function that holds the current users shopping cart 

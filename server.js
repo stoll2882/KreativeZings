@@ -6,7 +6,9 @@ const UserController = require("./controllers/UserController");
 const UtilityController = require("./controllers/UtilityController");
 const CartController = require("./controllers/CartController");
 const OrderController = require('./controllers/OrderController');
+const CatalogController = require('./controllers/CatalogController');
 const serverConfig = require('./config/serverconfig');
+const CatalogStorage = require('./data/CatalogStorage');
 
 const app = express();
 
@@ -29,6 +31,8 @@ UserController.setupRoutes(app);
 CartController.setupRoutes(app);
 OrderController.setupRoutes(app);
 UtilityController.setupRoutes(app);
+CatalogController.setupRoutes(app);
+CatalogStorage.init();
 
 // Setup the routes to run 
 if(serverConfig.ENVIRONMENT == "production") {
@@ -36,7 +40,7 @@ if(serverConfig.ENVIRONMENT == "production") {
 
     // Set static folder
     app.use(express.static('client/build'));
-    
+
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });

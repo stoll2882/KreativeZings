@@ -60,6 +60,25 @@ function setupRoutes(app) {
             res.status(500).end();
         }
     });
+
+    app.get("/user/checkName/:userName", async function (req, res) {
+        try {
+            var userName = sanitize(req.params["userName"]);
+            const userService = new UserService();
+            await userService.init();
+            var user = await userService.getUserByUserName(userName);
+            if(user == null) {
+                console.log("USERCONTROLLER(checkName): Get user failed. Username="+userName);
+                res.status(404).end();                    
+            } else {
+                console.log("USERCONTROLLER(checkName): Retrieved user after succesful auth. Username="+userName);
+                res.status(200).end();
+            }
+        } catch(error) {
+            console.log("USERCONTROLLER(checkName): Get user failed with error="+error);
+            res.status(500).end();
+        }        
+    });
 }
 
 module.exports = { setupRoutes };

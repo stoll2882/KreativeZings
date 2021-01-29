@@ -16,10 +16,10 @@ export default class Sticker extends React.Component {
             this.context.setCart([]);
         }
         if (this.context.cart == undefined || this.context.cart[0] == undefined || this.context.cart.length == 0) {
-            this.context.cart = [{id: this.props.id, name: this.props.name, description: this.props.description, image: this.props.image, quantity: this.props.quantity}];
+            this.context.cart = [{id: this.props.id, name: this.props.name, description: this.props.description, image: this.props.image, quantity: 1}];
         } else {
             if (this.handleGetIndex(this.props.id) == -1) {
-                this.context.cart.push({id: this.props.id, name: this.props.name, description: this.props.description, image: this.props.image, quantity: this.props.quantity});
+                this.context.cart.push({id: this.props.id, name: this.props.name, description: this.props.description, image: this.props.image, quantity: 1});
             } else {
                 var index = this.handleGetIndex(this.props.id);
                 var copyCart = this.context.cart;
